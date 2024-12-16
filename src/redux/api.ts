@@ -8,7 +8,9 @@ import {
 } from "../interfaces/psychologistsInterfaces";
 import { RootState } from "./store";
 
-axios.defaults.baseURL = "http://localhost:3030";
+const { REACT_APP_BASE_URL } = process.env;
+
+axios.defaults.baseURL = REACT_APP_BASE_URL;
 
 const setAuthToken = (token: string) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
