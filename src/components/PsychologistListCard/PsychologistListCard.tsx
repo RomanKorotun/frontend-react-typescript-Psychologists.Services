@@ -1,5 +1,6 @@
-import { FC, useState } from "react";
+import { FC, MouseEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { format } from "date-fns";
 import toast from "react-hot-toast";
 import {
   Img,
@@ -17,17 +18,18 @@ import {
   ListItem,
   ListItemAccent,
   About,
-  ButtonReadMore,
   SvgStar,
   ReviewList,
   ReviewerAvatar,
   ReviewerCard,
   ReviewerName,
-  RatingCard,
   ReviewerComment,
-  ButtonMakeAppointment,
+  ButtonAction,
   InfoWrapper,
   RatingPriceWrapper,
+  ButtonWrapper,
+  NotFoundMessage,
+  ReviewerDate,
 } from "./PsychologistListCard.styled";
 import sprite from "../../images/icons.svg";
 import { useAuth } from "../../hooks/useAuth";
@@ -37,16 +39,48 @@ import {
   updatePsychologistsCardLoggedIn,
 } from "../../redux/api.ts";
 import { usePsychologists } from "../../hooks/usePsychologists.ts";
-import { setClearFavoriteItem } from "../../redux/psychologists/psychologistsSlice.ts";
+import {
+  setClearFavoriteItem,
+  setNewReviewForLoggedInUser,
+} from "../../redux/psychologists/psychologistsSlice.ts";
 import { IItemProps } from "../../interfaces/psychologistsInterfaces.ts";
+import { ModalReview } from "../Modal/ModalReview/ModalReview.tsx";
+import { useLocation } from "react-router-dom";
+import { StarRatingComment } from "../StarRating/StarRatingComment.tsx";
+import { ModalAppointment } from "../Modal/ModalAppointment/ModalAppointment.tsx";
+import { useSocket } from "../../hooks/useSocket.ts";
 
 export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
+  const [isOpenReviewModal, setIsOpenReviewModal] = useState<boolean>(false);
+  const [isOpenModalAppointment, setIsOpenModalAppointment] =
+    useState<boolean>(false);
   const { favoriteItems } = usePsychologists();
-  const dispatch = useDispatch<AppDispatch>();
-  const [showMore, setShowMore] = useState<boolean>(true);
   const { isLoggedIn } = useAuth();
+  const socket = useSocket();
 
-  const handleSvgClick = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const location = useLocation();
+
+  const toggleAppointmentModal = () => {
+    setIsOpenModalAppointment((prevState: boolean) => !prevState);
+  };
+
+  const toggleReviewModal = () => {
+    setIsOpenReviewModal((prevState: boolean) => !prevState);
+  };
+
+  const handleClickAppointment = (event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    toggleAppointmentModal();
+  };
+
+  const handleClickReview = (event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    toggleReviewModal();
+  };
+
+  const handleSvgClick = (event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
     if (!isLoggedIn) {
       toast.error("This functionality is available only for authorized users!");
       return;
@@ -59,6 +93,26 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
     }
   };
 
+  useEffect(() => {
+    if (socket) {
+      socket.on("newReview", (review) => {
+        dispatch(setNewReviewForLoggedInUser(review));
+      });
+      return () => {
+        socket.off("newReview");
+      };
+    }
+  }, [dispatch, socket]);
+
+  const isCurrentPsychologistPage =
+    location.pathname === `/psychologist/${item._id}`;
+
+  const messageForLoggedInUsers =
+    "There are no comments yet. Be the first to share your thoughts!";
+
+  const messageForNotLoggedInUsers =
+    "There are no comments yet. To leave a comment, please log in!";
+
   return (
     <>
       <InfoWrapper>
@@ -70,9 +124,10 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
           <Title>{item.name}</Title>
         </div>
       </InfoWrapper>
+
       <RatingPriceFavoriteWrapper>
         <RatingPriceWrapper>
-          <SvgStar width={16} height={16}>
+          <SvgStar width={16} height={16} $isFilled={item.rating > 0}>
             <use href={`${sprite}#star-icon`} />
           </SvgStar>
           <Rating>Rating: {item.rating}</Rating>
@@ -87,6 +142,7 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
           </SvgHeart>
         </ButtonSvg>
       </RatingPriceFavoriteWrapper>
+
       <List>
         <ListItem>
           Experience: <ListItemAccent>{item.experience}</ListItemAccent>
@@ -102,35 +158,71 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
           <ListItemAccent>{item.initial_consultation}</ListItemAccent>
         </ListItem>
       </List>
-      <About>{item.about}</About>
-      {!showMore && (
-        <>
+
+      {isCurrentPsychologistPage && <About>{item.about}</About>}
+      {!isCurrentPsychologistPage && (
+        <About>{item.about.slice(0, 200)} ...</About>
+      )}
+
+      {isCurrentPsychologistPage && (
+        <ButtonWrapper>
+          <ButtonAction onClick={handleClickAppointment}>
+            Make an appointment
+          </ButtonAction>
+          {isLoggedIn && (
+            <ButtonAction onClick={handleClickReview}>
+              Leave a Review
+            </ButtonAction>
+          )}
+        </ButtonWrapper>
+      )}
+
+      {isCurrentPsychologistPage &&
+        item?.reviews &&
+        item.reviews.length > 0 && (
           <ReviewList>
             {item.reviews.map((review) => (
               <li key={review._id}>
                 <ReviewerCard>
                   <ReviewerAvatar>{review.reviewer.slice(0, 1)}</ReviewerAvatar>
                   <div>
+                    <ReviewerDate>
+                      {format(new Date(review.date), "dd.MM.yyyy")}
+                    </ReviewerDate>
                     <ReviewerName>{review.reviewer}</ReviewerName>
-                    <RatingCard>
-                      <svg width={16} height={16}>
-                        <use href={`${sprite}#star-icon`} />
-                      </svg>
-                      <span>{review.rating}</span>
-                    </RatingCard>
+                    <StarRatingComment
+                      totalStars={5}
+                      selectedStars={review.rating}
+                    />
                   </div>
                 </ReviewerCard>
                 <ReviewerComment>{review.comment}</ReviewerComment>
               </li>
             ))}
           </ReviewList>
-          <ButtonMakeAppointment>Make an appointment</ButtonMakeAppointment>
-        </>
-      )}
+        )}
 
-      <ButtonReadMore onClick={() => setShowMore((prevState) => !prevState)}>
-        {showMore ? "Show more" : "Show less"}
-      </ButtonReadMore>
+      {isCurrentPsychologistPage &&
+        item?.reviews &&
+        item.reviews.length === 0 && (
+          <NotFoundMessage>
+            {isLoggedIn ? messageForLoggedInUsers : messageForNotLoggedInUsers}
+          </NotFoundMessage>
+        )}
+
+      <ModalAppointment
+        id={item._id}
+        avatar={item.avatar_url}
+        name={item.name}
+        isOpenModal={isOpenModalAppointment}
+        onToggleModal={toggleAppointmentModal}
+      />
+
+      <ModalReview
+        id={item._id}
+        isOpenModal={isOpenReviewModal}
+        onToggleModal={toggleReviewModal}
+      />
     </>
   );
 };

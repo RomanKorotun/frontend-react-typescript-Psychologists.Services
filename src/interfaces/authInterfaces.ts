@@ -1,5 +1,20 @@
 import { ReactNode } from "react";
 
+export interface IModalAuthProps {
+  isOpenModal: boolean;
+  onToggleModal: () => void;
+}
+
+export interface IModalRevievProps extends IModalAuthProps {
+  id: string;
+}
+
+export interface IModalAppointmentProps extends IModalAuthProps {
+  id: string;
+  avatar: string;
+  name: string;
+}
+
 export interface IModalProps {
   isOpenModal: boolean;
   onToggleModal: () => void;

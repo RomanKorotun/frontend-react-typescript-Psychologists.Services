@@ -5,6 +5,7 @@ import { PrivateRoute } from "../components/PrivateRoute";
 
 const HomePage = lazy(() => import("../page/HomePage"));
 const PsychologistsPage = lazy(() => import("../page/PsychologistsPage"));
+const PsychologistPage = lazy(() => import("../page/PsychologistPage"));
 const PsychologistsFavoritePage = lazy(
   () => import("../page/PsychologistsFavoritePage")
 );
@@ -16,6 +17,7 @@ export const RoutesList: FC = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="psychologists" element={<PsychologistsPage />} />
+        <Route path="psychologist/:id" element={<PsychologistPage />} />
         <Route
           path="favorite"
           element={

@@ -10,10 +10,12 @@ import {
   pagesFavoriteQuantitySelector,
   clearFavoriteItemSelector,
   filterSelector,
+  oneItemSelector,
 } from "../redux/psychologists/psychologistsSelecrors";
 
 export const usePsychologists = () => {
   const items = useSelector(itemsSelector);
+  const oneItem = useSelector(oneItemSelector);
   const favoriteItems = useSelector(favoriteItemsSelector);
   const clearFavoriteItem = useSelector(clearFavoriteItemSelector);
   const filter = useSelector(filterSelector);
@@ -26,6 +28,7 @@ export const usePsychologists = () => {
 
   return {
     items,
+    oneItem,
     favoriteItems,
     clearFavoriteItem,
     filter,

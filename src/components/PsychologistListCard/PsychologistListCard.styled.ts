@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ISvgStarProps } from "../../interfaces/psychologistsInterfaces";
 
 export const InfoWrapper = styled.div`
   @media screen and (max-width: 929px) {
@@ -52,7 +53,9 @@ export const RatingPriceWrapper = styled.div`
   align-items: center;
 `;
 
-export const SvgStar = styled.svg`
+export const SvgStar = styled.svg<ISvgStarProps>`
+  stroke: #191a15;
+  fill: ${({ $isFilled }) => ($isFilled ? "#ffc531" : "white")};
   margin-right: 8px;
 `;
 
@@ -150,9 +153,34 @@ export const ListItemAccent = styled.span`
 export const About = styled.p`
   font-weight: 400;
   font-size: 16px;
-  line-height: 1.25;
+  line-height: 1.5;
   color: #8a8b88;
-  margin-bottom: 14px;
+  margin-bottom: 20px;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+`;
+
+export const ButtonAction = styled.button`
+  border-radius: 30px;
+  padding: 14px 32px;
+  background-color: #54be96;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #fbfbfb;
+  border: none;
+  transition: transform 250ms, background-color 250ms;
+  &:hover,
+  &:focus {
+    transform: scale(1.01);
+    background-color: #36a379;
+  }
 `;
 
 export const ReviewList = styled.ul`
@@ -166,12 +194,12 @@ export const ReviewList = styled.ul`
 export const ReviewerCard = styled.div`
   display: flex;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 `;
 
 export const ReviewerAvatar = styled.div`
-  width: 44px;
-  height: 44px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
   background-color: #deeee7;
   font-weight: 500;
@@ -183,56 +211,25 @@ export const ReviewerAvatar = styled.div`
   align-items: center;
 `;
 
+export const ReviewerDate = styled.div`
+  font-size: 10px;
+  margin-bottom: 4px;
+`;
+
 export const ReviewerName = styled.div`
   font-weight: 500;
-  font-size: 16px;
-  line-height: 1.25;
+  font-size: 14px;
   color: #191a15;
   margin-bottom: 4px;
 `;
 
-export const RatingCard = styled.div`
-  display: flex;
-  gap: 8px;
-`;
-
 export const ReviewerComment = styled.p`
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.25;
   color: #8a8b88;
 `;
 
-export const ButtonMakeAppointment = styled.button`
-  border-radius: 30px;
-  padding: 14px 32px;
-  background-color: #54be96;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-  color: #fbfbfb;
-  border: none;
-  margin-bottom: 14px;
-`;
-
-export const ButtonReadMore = styled.button`
-  display: block;
-  position: relative;
-  border: none;
-  background-color: transparent;
-  padding: 0;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.5;
-  color: #191a15;
-  &::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #191a15;
-  }
+export const NotFoundMessage = styled.div`
+  color: #8a8b88;
 `;

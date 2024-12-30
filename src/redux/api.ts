@@ -4,7 +4,8 @@ import { IUserRegister, IUserLogin } from "../interfaces/authInterfaces";
 import {
   IAllPpsychologists,
   IAllPpsychologistsFavorite,
-  IFavoriteCardAction,
+  IParamsId,
+  IReview,
 } from "../interfaces/psychologistsInterfaces";
 import { RootState } from "./store";
 
@@ -103,9 +104,11 @@ export const psychologistsLoggedIn = createAsyncThunk(
 
 export const updatePsychologistsCardLoggedIn = createAsyncThunk(
   "psychologists/updatePsychologistsCardLoggedIn",
-  async ({ id }: IFavoriteCardAction, thunkApi) => {
+  async ({ id }: IParamsId, thunkApi) => {
     try {
-      const response = await axios.put(`/api/loggedin/psychologists/${id}`);
+      const response = await axios.put(
+        `/api/loggedin/psychologists/${id}/favorite`
+      );
       return response.data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
@@ -134,10 +137,62 @@ export const psychologistsFavorite = createAsyncThunk(
 
 export const updatePsychologistsCardFavoriteLoggedIn = createAsyncThunk(
   "psychologists/updatePsychologistsCardFavoriteLoggedIn",
-  async ({ id }: IFavoriteCardAction, thunkApi) => {
+  async ({ id }: IParamsId, thunkApi) => {
     try {
-      const response = await axios.put(`/api/loggedin/psychologists/${id}`);
+      const response = await axios.put(
+        `/api/loggedin/psychologists/${id}/favorite`
+      );
       return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getOnePsychologistForNotLoggedInUser = createAsyncThunk(
+  "psychologists/getOnePsychologistForNotLoggedInUser",
+  async ({ id }: IParamsId, thunkApi) => {
+    try {
+      const response = await axios.get(`/api/not-loggedin/psychologists/${id}`);
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getOnePsychologistForLoggedInUser = createAsyncThunk(
+  "psychologists/getOnePsychologistForLoggedInUser",
+  async ({ id }: IParamsId, thunkApi) => {
+    try {
+      const response = await axios.get(`/api/loggedin/psychologists/${id}`);
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+// export const addReviewForLoggedInUser = createAsyncThunk(
+//   "psychologists/addReviewForLoggedInUser",
+//   async ({ id, ...reviews }: IReview, thunkApi) => {
+//     try {
+//       const response = await axios.post(
+//         `/api/loggedin/psychologists/${id}/reviews`,
+//         reviews
+//       );
+//       return response.data;
+//     } catch (error: any) {
+//       return thunkApi.rejectWithValue(error.message);
+//     }
+//   }
+// );
+
+export const addReviewForLoggedInUser = createAsyncThunk(
+  "psychologists/addReviewForLoggedInUser",
+  async ({ id, ...reviews }: IReview, thunkApi) => {
+    try {
+      await axios.post(`/api/loggedin/psychologists/${id}/reviews`, reviews);
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
     }

@@ -43,6 +43,14 @@ export const ModalLogin: FC<IModalProps> = ({ isOpenModal, onToggleModal }) => {
       isOpen={isOpenModal}
       onRequestClose={onToggleModal}
       contentLabel="Example Modal"
+      style={{
+        overlay: {
+          zIndex: 1000,
+        },
+        content: {
+          zIndex: 1000,
+        },
+      }}
     >
       <Formik
         initialValues={{

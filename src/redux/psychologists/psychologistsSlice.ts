@@ -5,6 +5,9 @@ import {
   psychologistsNotLoggedIn,
   updatePsychologistsCardLoggedIn,
   updatePsychologistsCardFavoriteLoggedIn,
+  getOnePsychologistForNotLoggedInUser,
+  getOnePsychologistForLoggedInUser,
+  addReviewForLoggedInUser,
 } from "../api";
 
 import {
@@ -17,6 +20,7 @@ import {
 
 const initialState: IPsychologistsState = {
   items: [],
+  oneItem: null,
   favoriteItems: [],
   clearFavoriteItem: false,
   filter: "Default",
@@ -53,6 +57,18 @@ const psychologistsSlice = createSlice({
     },
     setFilter: (state, action: PayloadAction<IFilter>) => {
       state.filter = action.payload.filter;
+    },
+    setNewReviewForLoggedInUser: (
+      state,
+      action: PayloadAction<IResponsePsychologistsItem>
+    ) => {
+      state.oneItem = action.payload;
+      state.items = state.items.map((el) => {
+        if (el._id === action.payload._id) {
+          return action.payload;
+        }
+        return el;
+      });
     },
   },
   extraReducers: (build) =>
@@ -92,6 +108,7 @@ const psychologistsSlice = createSlice({
       .addCase(
         updatePsychologistsCardLoggedIn.fulfilled,
         (state, action: PayloadAction<IResponsePsychologistsItem>) => {
+          state.oneItem = action.payload;
           state.items = state.items.map((el) => {
             if (el._id === action.payload._id) {
               return action.payload;
@@ -123,7 +140,49 @@ const psychologistsSlice = createSlice({
             (item) => item._id !== action.payload._id
           );
         }
-      ),
+      )
+      .addCase(getOnePsychologistForNotLoggedInUser.pending, (state) => {
+        state.error = false;
+        state.loading = true;
+      })
+      .addCase(
+        getOnePsychologistForNotLoggedInUser.fulfilled,
+        (state, action: PayloadAction<IResponsePsychologistsItem>) => {
+          state.loading = false;
+          state.oneItem = action.payload;
+        }
+      )
+      .addCase(getOnePsychologistForNotLoggedInUser.rejected, (state) => {
+        state.loading = false;
+        state.error = true;
+      })
+      .addCase(getOnePsychologistForLoggedInUser.pending, (state) => {
+        state.error = false;
+        state.loading = true;
+      })
+      .addCase(
+        getOnePsychologistForLoggedInUser.fulfilled,
+        (state, action: PayloadAction<IResponsePsychologistsItem>) => {
+          state.loading = false;
+          state.oneItem = action.payload;
+        }
+      )
+      .addCase(getOnePsychologistForLoggedInUser.rejected, (state) => {
+        state.loading = false;
+        state.error = true;
+      }),
+  // .addCase(
+  //   addReviewForLoggedInUser.fulfilled,
+  //   (state, action: PayloadAction<IResponsePsychologistsItem>) => {
+  //     state.oneItem = action.payload;
+  //     state.items = state.items.map((el) => {
+  //       if (el._id === action.payload._id) {
+  //         return action.payload;
+  //       }
+  //       return el;
+  //     });
+  //   }
+  // ),
 });
 
 export const psychologistsReducer = psychologistsSlice.reducer;
@@ -134,4 +193,5 @@ export const {
   resetPsychologistsState,
   resetPsychologistsFavoriteState,
   setClearFavoriteItem,
+  setNewReviewForLoggedInUser,
 } = psychologistsSlice.actions;

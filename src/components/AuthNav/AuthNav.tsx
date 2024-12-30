@@ -4,30 +4,31 @@ import { ModalRegister } from "../Modal/ModalRegister/ModalRegister";
 import { ModalLogin } from "../Modal/ModalLogin/ModalLogin";
 
 export const AuthNav: FC = () => {
-  const [isOpenRegisterForm, setIsOpenRegisterForm] = useState<boolean>(false);
-  const [isOpenLoginForm, setIsOpenLoginForm] = useState<boolean>(false);
+  const [isOpenRegisterModal, setIsOpenRegisterModal] =
+    useState<boolean>(false);
+  const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false);
 
-  const toggleModalLogin = () => {
-    setIsOpenLoginForm((pS: boolean) => !pS);
+  const toggleLoginModal = () => {
+    setIsOpenLoginModal((prevState: boolean) => !prevState);
   };
 
-  const toggleModalRegister = () => {
-    setIsOpenRegisterForm((pS: boolean) => !pS);
+  const toggleRegisterModal = () => {
+    setIsOpenRegisterModal((prevState: boolean) => !prevState);
   };
 
   return (
     <ButtonCard>
-      <ButtonLogin onClick={toggleModalLogin}>Log In</ButtonLogin>
-      <ButtonRegister onClick={toggleModalRegister}>
+      <ButtonLogin onClick={toggleLoginModal}>Log In</ButtonLogin>
+      <ButtonRegister onClick={toggleRegisterModal}>
         Registration
       </ButtonRegister>
       <ModalRegister
-        isOpenModal={isOpenRegisterForm}
-        onToggleModal={toggleModalRegister}
+        isOpenModal={isOpenRegisterModal}
+        onToggleModal={toggleRegisterModal}
       />
       <ModalLogin
-        isOpenModal={isOpenLoginForm}
-        onToggleModal={toggleModalLogin}
+        isOpenModal={isOpenLoginModal}
+        onToggleModal={toggleLoginModal}
       />
     </ButtonCard>
   );

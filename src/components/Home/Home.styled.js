@@ -72,12 +72,19 @@ export const SubTitle = styled.p`
 `;
 
 export const LinkHomeStyled = styled(Link)`
+  display: inline-block;
   background-color: #54be96;
   border-radius: 30px;
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: #fbfbfb;
+  transition: transform 250ms, background-color 250ms;
+  &:hover,
+  &:focus {
+    transform: scale(1.01);
+    background-color: #36a379;
+  }
 
   @media only screen and (max-width: 599px) {
     display: block;

@@ -1,6 +1,8 @@
 import { RootState } from "../store";
 
 export const itemsSelector = (state: RootState) => state.psychologists.items;
+export const oneItemSelector = (state: RootState) =>
+  state.psychologists.oneItem;
 export const favoriteItemsSelector = (state: RootState) =>
   state.psychologists.favoriteItems;
 export const clearFavoriteItemSelector = (state: RootState) =>

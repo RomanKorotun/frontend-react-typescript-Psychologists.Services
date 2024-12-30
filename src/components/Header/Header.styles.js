@@ -6,7 +6,7 @@ export const HeaderStyled = styled.header`
   left: 0;
   right: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 100;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #f3f3f3;
   padding-top: 34px;

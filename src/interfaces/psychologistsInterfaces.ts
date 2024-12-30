@@ -1,25 +1,28 @@
-interface IPsychologistsItems {
+interface IPsychologistsItem {
   _id: string;
   name: string;
   avatar_url: string;
   experience: string;
-  reviews: {
+  reviews?: {
     _id: string;
     reviewer: string;
-    rating: string;
+    rating: number;
     comment: string;
+    date: string;
   }[];
-  price_per_hour: string;
-  rating: string;
+  price_per_hour: number;
+  rating: number;
   license: string;
   specialization: string;
   initial_consultation: string;
   about: string;
+  owner?: string[];
 }
 
 export interface IPsychologistsState {
-  items: IPsychologistsItems[];
-  favoriteItems: IPsychologistsItems[];
+  items: IPsychologistsItem[];
+  oneItem: IPsychologistsItem | null;
+  favoriteItems: IPsychologistsItem[];
   clearFavoriteItem: boolean;
   filter: string | null;
   page: number;
@@ -38,25 +41,27 @@ export interface IFilter {
   filter: string | null;
 }
 
-export interface IResponsePsychologistsItem {
-  _id: string;
-  name: string;
-  avatar_url: string;
-  experience: string;
-  reviews: {
-    _id: string;
-    reviewer: string;
-    rating: string;
-    comment: string;
-  }[];
-  price_per_hour: string;
-  rating: string;
-  license: string;
-  specialization: string;
-  initial_consultation: string;
-  about: string;
-  owner?: string[];
-}
+export interface IResponsePsychologistsItem extends IPsychologistsItem {}
+
+// export interface IResponsePsychologistsItem {
+//   _id: string;
+//   name: string;
+//   avatar_url: string;
+//   experience: string;
+//   reviews?: {
+//     _id: string;
+//     reviewer: string;
+//     rating: number;
+//     comment: string;
+//   }[];
+//   price_per_hour: number;
+//   rating: number;
+//   license: string;
+//   specialization: string;
+//   initial_consultation: string;
+//   about: string;
+//   owner?: string[];
+// }
 
 export interface IItemProps {
   item: IResponsePsychologistsItem;
@@ -81,6 +86,32 @@ export interface IAllPpsychologistsFavorite
   pageFavorite: number;
 }
 
-export interface IFavoriteCardAction {
+export interface IParamsId {
   id: string;
+}
+
+export interface IStarRatingModal {
+  totalStars: number;
+  onStarClick: (index: number) => void;
+  selectedStars: number;
+}
+
+export interface IStarRatingComment
+  extends Omit<IStarRatingModal, "onStarClick"> {}
+
+export interface IReview {
+  id?: string;
+  rating: number;
+  comment: string;
+}
+
+export interface IAppointment {
+  name: string;
+  phone: string;
+  email: string;
+  comment: string;
+}
+
+export interface ISvgStarProps {
+  $isFilled?: boolean;
 }

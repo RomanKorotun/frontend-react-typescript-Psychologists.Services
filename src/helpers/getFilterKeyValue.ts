@@ -5,9 +5,9 @@ export const getFilterKeyValue = (newValue: string | null) => {
     case filterOptions[0]:
       return { key: "standard", value: "all" };
     case filterOptions[1]:
-      return { key: "name", value: "desc" };
-    case filterOptions[2]:
       return { key: "name", value: "asc" };
+    case filterOptions[2]:
+      return { key: "name", value: "desc" };
     case filterOptions[3]:
       return { key: "price", value: "desc" };
     case filterOptions[4]:

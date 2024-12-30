@@ -5,6 +5,7 @@ export const List = styled.ul`
 `;
 
 export const ListItem = styled.li`
+  cursor: pointer;
   @media screen and (max-width: 350px) {
     padding-right: 10px;
     padding-left: 10px;
@@ -22,7 +23,13 @@ export const ListItem = styled.li`
   @media screen and (min-width: 930px) {
     padding-left: 160px;
   }
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 250ms, box-shadow 250ms;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+  &:hover,
+  &:focus {
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2);
+    transform: scale(1.01);
+  }
   &:not(:last-of-type) {
     margin-bottom: 32px;
   }

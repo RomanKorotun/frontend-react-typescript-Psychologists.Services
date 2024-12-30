@@ -11,7 +11,7 @@ export const CustomModalRegister = styled(Modal)`
   background-color: #fbfbfb;
   transform: translate(-50%, -50%);
   overflow: auto;
-  padding: 64px;
+  padding: 40px;
   width: 95%;
   @media only screen and (max-width: 427px) {
     padding: 34px;
@@ -20,7 +20,7 @@ export const CustomModalRegister = styled(Modal)`
     padding: 44px;
   }
   @media only screen and (min-width: 595px) {
-    width: 565px;
+    width: 450px;
   }
 `;
 
@@ -28,20 +28,20 @@ export const TitleRegisterForm = styled.div`
   font-weight: 500;
   font-size: 26px;
   @media only screen and (min-width: 428px) {
-    font-size: 40px;
+    font-size: 30px;
   }
   line-height: 1.2;
   letter-spacing: -0.02em;
   color: #191a15;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 `;
 
 export const DescriptionRegisterForm = styled.p`
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.25;
   color: rgba(25, 26, 21, 0.5);
-  margin-bottom: 40px;
+  margin-bottom: 14px;
 `;
 
 export const FormRegister = styled(Form)`
@@ -51,10 +51,10 @@ export const FormRegister = styled(Form)`
 
 export const LabelStyled = styled.label`
   position: relative;
-  margin-bottom: 20px;
-  &:last-of-type {
+  margin-bottom: 14px;
+  /* &:last-of-type {
     margin-bottom: 40px;
-  }
+  } */
 `;
 
 export const FieldStyled = styled(Field)`
@@ -63,7 +63,7 @@ export const FieldStyled = styled(Field)`
   padding-top: 16px;
   padding-bottom: 16px;
   padding-left: 18px;
-  height: 52px;
+  height: 42px;
   width: 100%;
 
   &::placeholder {
@@ -75,9 +75,10 @@ export const FieldStyled = styled(Field)`
 `;
 
 export const ErrMsg = styled(ErrorMessage)`
+  font-size: 13px;
   position: absolute;
-  bottom: -18px;
-  left: 0;
+  bottom: -14px;
+  left: 5px;
   color: #eb4c42;
 `;
 
