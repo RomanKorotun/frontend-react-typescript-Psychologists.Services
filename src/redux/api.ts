@@ -4,8 +4,11 @@ import { IUserRegister, IUserLogin } from "../interfaces/authInterfaces";
 import {
   IAllPpsychologists,
   IAllPpsychologistsFavorite,
+  IAppointment,
   IParamsId,
+  IGetReservedTimesForDay,
   IReview,
+  IaddReservedTimesForDay,
 } from "../interfaces/psychologistsInterfaces";
 import { RootState } from "./store";
 
@@ -173,13 +176,34 @@ export const getOnePsychologistForLoggedInUser = createAsyncThunk(
   }
 );
 
-// export const addReviewForLoggedInUser = createAsyncThunk(
-//   "psychologists/addReviewForLoggedInUser",
-//   async ({ id, ...reviews }: IReview, thunkApi) => {
+export const addReviewForLoggedInUser = createAsyncThunk(
+  "psychologists/addReviewForLoggedInUser",
+  async ({ id, ...reviews }: IReview, thunkApi) => {
+    try {
+      await axios.post(`/api/loggedin/psychologists/${id}/reviews`, reviews);
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const addAppointmentForNotLoggedInUser = createAsyncThunk(
+  "appointment/addAppointmentForNotLoggedInUser",
+  async (appointment: IAppointment, thunkApi) => {
+    try {
+      await axios.post("/api/not-loggedin/appointments", appointment);
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+// export const getReservedTimesForDayForNotLoggedInUser = createAsyncThunk(
+//   "appointment/getReservedTimesForDayForNotLoggedInUser",
+//   async ({ psychologistId, date }: IReservedTimeForDay, thunkApi) => {
 //     try {
-//       const response = await axios.post(
-//         `/api/loggedin/psychologists/${id}/reviews`,
-//         reviews
+//       const response = await axios.get(
+//         `/api/not-loggedin/appointments/${psychologistId}/${date}`
 //       );
 //       return response.data;
 //     } catch (error: any) {
@@ -188,11 +212,26 @@ export const getOnePsychologistForLoggedInUser = createAsyncThunk(
 //   }
 // );
 
-export const addReviewForLoggedInUser = createAsyncThunk(
-  "psychologists/addReviewForLoggedInUser",
-  async ({ id, ...reviews }: IReview, thunkApi) => {
+export const getReservedTimesForDay = createAsyncThunk(
+  "appointment/getReservedTimesForDay",
+  async ({ psychologistId, date }: IGetReservedTimesForDay, thunkApi) => {
     try {
-      await axios.post(`/api/loggedin/psychologists/${id}/reviews`, reviews);
+      const response = await axios.get(
+        `/api/reserved-times/${psychologistId}/${date}`
+      );
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const addReservedTimesForDay = createAsyncThunk(
+  "appointment/addReservedTimesForDay",
+  async (data: IaddReservedTimesForDay, thunkApi) => {
+    try {
+      await axios.post(`/api/reserved-times`, data);
+      // return response.data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
     }

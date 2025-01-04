@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { Formik } from "formik";
 import {
-  ButtonCloseModal,
   ButtonSubmit,
   CustomModalRegister,
   DescriptionRegisterForm,
@@ -14,12 +13,12 @@ import {
   LabelStyled,
   TitleRegisterForm,
 } from "./ModalRegister.styled";
-import sprite from "../../../images/icons.svg";
 import { AppDispatch } from "../../../redux/store";
 import { signup } from "../../../redux/api";
 import { IModalProps, IUserRegister } from "../../../interfaces/authInterfaces";
 import { resetPsychologistsState } from "../../../redux/psychologists/psychologistsSlice";
 import { RegisterSchema } from "../../../validationShemas/authShemas";
+import { CloseModalButton } from "../../CloseModalButton/CloseModalButton";
 
 Modal.setAppElement("#root");
 
@@ -89,11 +88,8 @@ export const ModalRegister: FC<IModalProps> = ({
           </FormRegister>
         </>
       </Formik>
-      <ButtonCloseModal onClick={onToggleModal}>
-        <svg width={32} height={32}>
-          <use href={`${sprite}#close-icon`} />
-        </svg>
-      </ButtonCloseModal>
+
+      <CloseModalButton onClick={onToggleModal} />
     </CustomModalRegister>
   );
 };

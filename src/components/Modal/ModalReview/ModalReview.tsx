@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import Modal from "react-modal";
 import { Formik, FormikProps } from "formik";
 import {
-  ButtonCloseModal,
   ButtonSubmit,
   CustomModalReview,
   DescriptionReviewForm,
@@ -13,7 +12,6 @@ import {
   TitleReviewForm,
   ErrMsg,
 } from "./ModalReview.styled";
-import sprite from "../../../images/icons.svg";
 import { IModalRevievProps } from "../../../interfaces/authInterfaces";
 import { ReviewShema } from "../../../validationShemas/psychologistShemas";
 import { StarRatingModal } from "../../StarRating/StarRatingModal";
@@ -21,6 +19,7 @@ import { IReview } from "../../../interfaces/psychologistsInterfaces";
 import { TextArea } from "../../TextArea/TextArea";
 import { AppDispatch } from "../../../redux/store";
 import { addReviewForLoggedInUser } from "../../../redux/api";
+import { CloseModalButton } from "../../CloseModalButton/CloseModalButton";
 
 Modal.setAppElement("#root");
 
@@ -107,11 +106,8 @@ export const ModalReview: FC<IModalRevievProps> = ({
           </>
         )}
       </Formik>
-      <ButtonCloseModal onClick={onToggleModal}>
-        <svg width={32} height={32}>
-          <use href={`${sprite}#close-icon`} />
-        </svg>
-      </ButtonCloseModal>
+
+      <CloseModalButton onClick={onToggleModal} />
     </CustomModalReview>
   );
 };

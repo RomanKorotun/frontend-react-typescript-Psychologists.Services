@@ -8,6 +8,7 @@ import { usePsychologists } from "../hooks/usePsychologists";
 import {
   resetPsychologistsState,
   setFilter,
+  setNewReview,
 } from "../redux/psychologists/psychologistsSlice";
 import { useAuth } from "../hooks/useAuth";
 import { Loader } from "../components/Loader/Loader";
@@ -15,12 +16,14 @@ import { PaginationButtons } from "../components/Pagination/Pagination";
 import { Filters } from "../components/Filters/Filters";
 import { useFilters } from "../hooks/useFilters";
 import { useQueryParams } from "../hooks/useQueryParams";
+import { useSocket } from "../hooks/useSocket";
 
 const PsychologistsPage: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { isLoggedIn, loading: loadingAuth } = useAuth();
   const { items, loading, page } = usePsychologists();
   const { standard, name, price, popular } = useFilters();
+  const socket = useSocket();
 
   const isFirstNotLoginRender = useRef(true);
   const isFirstLoginRender = useRef(true);
@@ -53,6 +56,17 @@ const PsychologistsPage: FC = () => {
       dispatch(setFilter({ filter: "Default" }));
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("newReview", (review) => {
+        dispatch(setNewReview(review));
+      });
+      return () => {
+        socket.off("newReview");
+      };
+    }
+  }, [dispatch, socket]);
 
   return (
     <Section>

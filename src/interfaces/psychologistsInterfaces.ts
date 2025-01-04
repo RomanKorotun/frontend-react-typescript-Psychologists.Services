@@ -106,10 +106,49 @@ export interface IReview {
 }
 
 export interface IAppointment {
-  name: string;
-  phone: string;
-  email: string;
-  comment: string;
+  psychologistId: string;
+  clientId: string;
+  client_name: string;
+  client_phone: string;
+  client_email: string;
+  // comment: string;
+  date: Date | null;
+  time: string;
+}
+
+interface ITimeSlot {
+  time: string;
+  isReserved: boolean;
+}
+
+export interface IAppointmentsState {
+  selectedDate: string | null;
+  reservedTimes: ITimeSlot[];
+  clientId: string | null;
+}
+
+export interface IResponseGetReservedTimeForDay
+  extends Pick<IAppointmentsState, "reservedTimes"> {}
+
+export interface IResponseAddReservedTimeForDay {
+  psychologistId: string;
+  clientId: string;
+  date: string;
+  time: string;
+  iReserved: boolean;
+}
+
+export interface ISetSelectedDate {
+  date: string | null;
+}
+
+export interface IGetReservedTimesForDay
+  extends Pick<IAppointment, "psychologistId" | "date"> {}
+
+export interface IaddReservedTimesForDay
+  extends Pick<IAppointment, "psychologistId" | "time"> {
+  date: string;
+  clientId: string;
 }
 
 export interface ISvgStarProps {

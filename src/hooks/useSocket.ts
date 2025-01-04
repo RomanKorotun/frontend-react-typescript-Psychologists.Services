@@ -5,11 +5,15 @@ const { REACT_APP_BASE_URL } = process.env;
 
 export const useSocket = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
+
   useEffect(() => {
-    if (!socket) {
-      const socketInstance = io(REACT_APP_BASE_URL);
-      setSocket(socketInstance);
-    }
-  }, [socket, setSocket]);
+    const socketInstance = io(REACT_APP_BASE_URL);
+    setSocket(socketInstance);
+
+    return () => {
+      socketInstance.disconnect();
+    };
+  }, []);
+
   return socket;
 };

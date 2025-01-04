@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useEffect, useState } from "react";
+import { FC, MouseEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { format } from "date-fns";
 import toast from "react-hot-toast";
@@ -39,16 +39,12 @@ import {
   updatePsychologistsCardLoggedIn,
 } from "../../redux/api.ts";
 import { usePsychologists } from "../../hooks/usePsychologists.ts";
-import {
-  setClearFavoriteItem,
-  setNewReviewForLoggedInUser,
-} from "../../redux/psychologists/psychologistsSlice.ts";
+import { setClearFavoriteItem } from "../../redux/psychologists/psychologistsSlice.ts";
 import { IItemProps } from "../../interfaces/psychologistsInterfaces.ts";
 import { ModalReview } from "../Modal/ModalReview/ModalReview.tsx";
 import { useLocation } from "react-router-dom";
 import { StarRatingComment } from "../StarRating/StarRatingComment.tsx";
 import { ModalAppointment } from "../Modal/ModalAppointment/ModalAppointment.tsx";
-import { useSocket } from "../../hooks/useSocket.ts";
 
 export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
   const [isOpenReviewModal, setIsOpenReviewModal] = useState<boolean>(false);
@@ -56,7 +52,6 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
     useState<boolean>(false);
   const { favoriteItems } = usePsychologists();
   const { isLoggedIn } = useAuth();
-  const socket = useSocket();
 
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
@@ -92,17 +87,6 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
       dispatch(updatePsychologistsCardLoggedIn({ id: item._id }));
     }
   };
-
-  useEffect(() => {
-    if (socket) {
-      socket.on("newReview", (review) => {
-        dispatch(setNewReviewForLoggedInUser(review));
-      });
-      return () => {
-        socket.off("newReview");
-      };
-    }
-  }, [dispatch, socket]);
 
   const isCurrentPsychologistPage =
     location.pathname === `/psychologist/${item._id}`;

@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { Formik } from "formik";
 import {
-  ButtonCloseModal,
   ButtonSubmit,
   CustomModalLogin,
   DescriptionLoginForm,
@@ -14,7 +13,6 @@ import {
   TitleLoginForm,
   ErrMsg,
 } from "./ModalLogin.styled";
-import sprite from "../../../images/icons.svg";
 import { IModalProps, IUserLogin } from "../../../interfaces/authInterfaces";
 import { AppDispatch } from "../../../redux/store";
 import { signin } from "../../../redux/api";
@@ -23,6 +21,7 @@ import {
   setFilter,
 } from "../../../redux/psychologists/psychologistsSlice";
 import { LoginSchema } from "../../../validationShemas/authShemas";
+import { CloseModalButton } from "../../CloseModalButton/CloseModalButton";
 
 Modal.setAppElement("#root");
 
@@ -84,11 +83,8 @@ export const ModalLogin: FC<IModalProps> = ({ isOpenModal, onToggleModal }) => {
           </FormLogin>
         </>
       </Formik>
-      <ButtonCloseModal onClick={onToggleModal}>
-        <svg width={32} height={32}>
-          <use href={`${sprite}#close-icon`} />
-        </svg>
-      </ButtonCloseModal>
+
+      <CloseModalButton onClick={onToggleModal} />
     </CustomModalLogin>
   );
 };

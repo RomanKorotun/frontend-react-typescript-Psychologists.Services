@@ -9,6 +9,7 @@ import {
   resetPsychologistsFavoriteState,
   setClearFavoriteItem,
   setFilter,
+  setNewReview,
   setPageFavorite,
 } from "../redux/psychologists/psychologistsSlice";
 import { Loader } from "../components/Loader/Loader";
@@ -16,6 +17,7 @@ import { PaginationButtons } from "../components/Pagination/Pagination";
 import { Filters } from "../components/Filters/Filters";
 import { useFilters } from "../hooks/useFilters";
 import { useQueryParams } from "../hooks/useQueryParams";
+import { useSocket } from "../hooks/useSocket";
 
 const PsychologistsFavoritePage: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,6 +29,7 @@ const PsychologistsFavoritePage: FC = () => {
     clearFavoriteItem,
   } = usePsychologists();
   const { standard, name, price, popular } = useFilters();
+  const socket = useSocket();
 
   const isFirstRender = useRef(true);
 
@@ -81,6 +84,17 @@ const PsychologistsFavoritePage: FC = () => {
       dispatch(setFilter({ filter: "Default" }));
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("newReview", (review) => {
+        dispatch(setNewReview(review));
+      });
+      return () => {
+        socket.off("newReview");
+      };
+    }
+  }, [dispatch, socket]);
 
   return (
     <Section>

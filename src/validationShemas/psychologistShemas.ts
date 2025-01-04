@@ -10,10 +10,12 @@ export const ReviewShema = Yup.object().shape({
 });
 
 export const AppointmentShema = Yup.object().shape({
-  name: Yup.string().required("Required"),
-  phone: Yup.string().required("Required"),
-  email: Yup.string()
+  client_name: Yup.string().required("Required"),
+  client_phone: Yup.string().required("Required"),
+  client_email: Yup.string()
     .matches(emailRegexp, "Invalid email")
     .required("Required"),
-  comment: Yup.string(),
+  // comment: Yup.string(),
+  date: Yup.string().required("Required"),
+  time: Yup.string().required("Required"),
 });

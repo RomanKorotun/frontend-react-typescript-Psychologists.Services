@@ -58,7 +58,7 @@ const psychologistsSlice = createSlice({
     setFilter: (state, action: PayloadAction<IFilter>) => {
       state.filter = action.payload.filter;
     },
-    setNewReviewForLoggedInUser: (
+    setNewReview: (
       state,
       action: PayloadAction<IResponsePsychologistsItem>
     ) => {
@@ -193,5 +193,5 @@ export const {
   resetPsychologistsState,
   resetPsychologistsFavoriteState,
   setClearFavoriteItem,
-  setNewReviewForLoggedInUser,
+  setNewReview,
 } = psychologistsSlice.actions;

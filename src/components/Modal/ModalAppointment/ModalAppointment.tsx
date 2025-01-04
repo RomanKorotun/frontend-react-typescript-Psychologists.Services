@@ -1,16 +1,13 @@
 import { FC } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { Formik } from "formik";
 import {
-  ButtonCloseModal,
   ButtonSubmit,
   CustomModalAppointment,
   DescriptionAppointmentForm,
   FieldStyled,
   FormAppointment,
-  LabelStyled,
   TitleAppointmentForm,
   ErrMsg,
   TextAreaStyled,
@@ -18,26 +15,41 @@ import {
   PsychologistCard,
   LabelName,
   Name,
+  WrapperField,
+  WrapperDateField,
+  WrapperDateAndTime,
+  WrapperTimeField,
 } from "./ModalAppointment.styled";
-import sprite from "../../../images/icons.svg";
 import { IModalAppointmentProps } from "../../../interfaces/authInterfaces";
 import { AppDispatch } from "../../../redux/store";
 import { AppointmentShema } from "../../../validationShemas/psychologistShemas";
 import { IAppointment } from "../../../interfaces/psychologistsInterfaces";
 import { TextArea } from "../../TextArea/TextArea";
+import "react-datepicker/dist/react-datepicker.css";
+import { SelectDate } from "../../DateAndTimePicker/SelectDate";
+import { SelectTime } from "../../DateAndTimePicker/SelectTime/SelectTime";
+import { CloseModalButton } from "../../CloseModalButton/CloseModalButton";
+import { addAppointmentForNotLoggedInUser } from "../../../redux/api";
+import { setClientId } from "../../../redux/appointments/appointmentsSlice";
+import { useAppointments } from "../../../hooks/useAppointments";
 
 Modal.setAppElement("#root");
 
 export const ModalAppointment: FC<IModalAppointmentProps> = ({
+  id,
   avatar,
   name,
   isOpenModal,
   onToggleModal,
 }) => {
+  const { clientId } = useAppointments();
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
 
-  const handleSubmit = (values: IAppointment) => {};
+  const handleSubmit = (values: IAppointment) => {
+    dispatch(addAppointmentForNotLoggedInUser(values));
+    dispatch(setClientId(null));
+    onToggleModal();
+  };
 
   return (
     <CustomModalAppointment
@@ -55,64 +67,90 @@ export const ModalAppointment: FC<IModalAppointmentProps> = ({
     >
       <Formik
         initialValues={{
-          name: "",
-          phone: "+380",
-          email: "",
-          comment: "",
+          psychologistId: id,
+          clientId: clientId || "",
+          client_name: "",
+          client_phone: "",
+          client_email: "",
+          // comment: "",
+          date: null,
+          time: "",
         }}
         validationSchema={AppointmentShema}
         onSubmit={handleSubmit}
       >
-        <>
-          <TitleAppointmentForm>Appointment</TitleAppointmentForm>
-          <DescriptionAppointmentForm>
-            Fill out the short form below to book your personal appointment with
-            a professional psychologist.
-          </DescriptionAppointmentForm>
+        {({ setFieldValue, values }) => (
+          <>
+            <TitleAppointmentForm>Appointment</TitleAppointmentForm>
+            <DescriptionAppointmentForm>
+              Fill out the short form below to book your personal appointment
+              with a professional psychologist.
+            </DescriptionAppointmentForm>
 
-          <PsychologistCard>
-            <PsychologistAvatar src={avatar} alt="avatar" />
-            <div>
-              <LabelName>Your psychologist</LabelName>
-              <Name>{name}</Name>
-            </div>
-          </PsychologistCard>
+            <PsychologistCard>
+              <PsychologistAvatar src={avatar} alt="avatar" />
+              <div>
+                <LabelName>Your psychologist</LabelName>
+                <Name>{name}</Name>
+              </div>
+            </PsychologistCard>
 
-          <FormAppointment>
-            <LabelStyled>
-              <FieldStyled name="name" placeholder="Name" />
-              <ErrMsg component="div" name="name" />
-            </LabelStyled>
+            <FormAppointment>
+              <WrapperField>
+                <FieldStyled name="client_name" placeholder="Name" />
+                <ErrMsg component="div" name="client_name" />
+              </WrapperField>
 
-            <LabelStyled>
-              <FieldStyled name="phone" />
-              <ErrMsg component="div" name="phone" />
-            </LabelStyled>
+              <WrapperField>
+                <FieldStyled name="client_phone" placeholder="Phone" />
+                <ErrMsg component="div" name="client_phone" />
+              </WrapperField>
 
-            <LabelStyled>
-              <FieldStyled name="email" type="email" placeholder="Email" />
-              <ErrMsg component="div" name="email" />
-            </LabelStyled>
+              <WrapperField>
+                <FieldStyled
+                  name="client_email"
+                  type="email"
+                  placeholder="Email"
+                />
+                <ErrMsg component="div" name="client_email" />
+              </WrapperField>
 
-            <LabelStyled>
-              <TextAreaStyled
-                name="comment"
-                placeholder="Comment"
-                component={TextArea}
-              />
-              <ErrMsg component="div" name="comment" />
-            </LabelStyled>
+              {/* <WrapperField>
+                <TextAreaStyled
+                  name="comment"
+                  placeholder="Comment"
+                  component={TextArea}
+                />
+                <ErrMsg component="div" name="comment" />
+              </WrapperField> */}
 
-            <ButtonSubmit type="submit">Send</ButtonSubmit>
-          </FormAppointment>
-        </>
+              <WrapperDateAndTime>
+                <WrapperDateField>
+                  <SelectDate
+                    psychologistId={id}
+                    selected={values.date}
+                    setFieldValue={setFieldValue}
+                  />
+                  <ErrMsg component="div" name="date" />
+                </WrapperDateField>
+
+                <WrapperTimeField>
+                  <SelectTime
+                    psychologistId={id}
+                    value={values.time || ""}
+                    setFieldValue={setFieldValue}
+                  />
+                  <ErrMsg component="div" name="time" />
+                </WrapperTimeField>
+              </WrapperDateAndTime>
+
+              <ButtonSubmit type="submit">Send</ButtonSubmit>
+            </FormAppointment>
+          </>
+        )}
       </Formik>
 
-      <ButtonCloseModal onClick={onToggleModal}>
-        <svg width={32} height={32}>
-          <use href={`${sprite}#close-icon`} />
-        </svg>
-      </ButtonCloseModal>
+      <CloseModalButton onClick={onToggleModal} />
     </CustomModalAppointment>
   );
 };
