@@ -26,7 +26,7 @@ const clearAuthToken = () => {
   axios.defaults.headers.common.Authorization = "";
 };
 
-// =============================auth================================
+// =============================auth=================================
 
 export const signup = createAsyncThunk(
   "auth/signup",
@@ -78,7 +78,7 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunlApi) => {
   }
 });
 
-// =============================/auth================================
+// =============================/auth=================================
 
 // =============================psychologists========================
 
