@@ -1,6 +1,7 @@
 import { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
+import { format } from "date-fns";
 import { AppDispatch } from "../../redux/store";
 import { getReservedTimesForDay } from "../../redux/api";
 import { setSelectedDate } from "../../redux/appointments/appointmentsSlice";
@@ -21,8 +22,8 @@ export const SelectDate: FC<ISelectDateProps> = ({
   const handleDateChange = (date: Date | null) => {
     setFieldValue("date", date);
 
-    date && dispatch(setSelectedDate({ date: date.toLocaleString() }));
-
+    // date && dispatch(setSelectedDate({ date: date.toLocaleString() }));
+    date && dispatch(setSelectedDate({ date: format(date, "yyyy-MM-dd") }));
     dispatch(getReservedTimesForDay({ psychologistId, date }));
   };
 
