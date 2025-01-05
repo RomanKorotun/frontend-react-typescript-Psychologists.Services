@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/frontend-react-typescript-Psychologists.Services/static/css/main.7cda0caf.css",
-    "main.js": "/frontend-react-typescript-Psychologists.Services/static/js/main.5af4d3ed.js",
+    "main.js": "/frontend-react-typescript-Psychologists.Services/static/js/main.abf57744.js",
     "static/js/724.4a2ad42c.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/724.4a2ad42c.chunk.js",
-    "static/js/388.30d86ae1.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/388.30d86ae1.chunk.js",
+    "static/js/388.55e45355.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/388.55e45355.chunk.js",
     "static/js/593.f79c0d9b.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/593.f79c0d9b.chunk.js",
     "static/js/411.e6b7c618.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/411.e6b7c618.chunk.js",
     "static/js/646.bb586d3d.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/646.bb586d3d.chunk.js",
@@ -11,7 +11,7 @@
     "static/css/623.229048fd.chunk.css": "/frontend-react-typescript-Psychologists.Services/static/css/623.229048fd.chunk.css",
     "static/js/623.add89019.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/623.add89019.chunk.js",
     "static/js/442.a4e818aa.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/442.a4e818aa.chunk.js",
-    "static/js/816.601ae8e9.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/816.601ae8e9.chunk.js",
+    "static/js/816.0904bbb2.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/816.0904bbb2.chunk.js",
     "static/media/image_1@2x.jpg": "/frontend-react-typescript-Psychologists.Services/static/media/image_1@2x.db9724a5295611a23230.jpg",
     "static/media/image_2@2x.webp": "/frontend-react-typescript-Psychologists.Services/static/media/image_2@2x.e7d35d66539034293ce1.webp",
     "static/media/image_1.jpg": "/frontend-react-typescript-Psychologists.Services/static/media/image_1.2e528f09df38307749bb.jpg",
@@ -19,9 +19,9 @@
     "static/media/icons.svg": "/frontend-react-typescript-Psychologists.Services/static/media/icons.22856a099e0b7b8b5cd0e879334e7f47.svg",
     "index.html": "/frontend-react-typescript-Psychologists.Services/index.html",
     "main.7cda0caf.css.map": "/frontend-react-typescript-Psychologists.Services/static/css/main.7cda0caf.css.map",
-    "main.5af4d3ed.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/main.5af4d3ed.js.map",
+    "main.abf57744.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/main.abf57744.js.map",
     "724.4a2ad42c.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/724.4a2ad42c.chunk.js.map",
-    "388.30d86ae1.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/388.30d86ae1.chunk.js.map",
+    "388.55e45355.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/388.55e45355.chunk.js.map",
     "593.f79c0d9b.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/593.f79c0d9b.chunk.js.map",
     "411.e6b7c618.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/411.e6b7c618.chunk.js.map",
     "646.bb586d3d.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/646.bb586d3d.chunk.js.map",
@@ -29,10 +29,10 @@
     "623.229048fd.chunk.css.map": "/frontend-react-typescript-Psychologists.Services/static/css/623.229048fd.chunk.css.map",
     "623.add89019.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/623.add89019.chunk.js.map",
     "442.a4e818aa.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/442.a4e818aa.chunk.js.map",
-    "816.601ae8e9.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/816.601ae8e9.chunk.js.map"
+    "816.0904bbb2.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/816.0904bbb2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7cda0caf.css",
-    "static/js/main.5af4d3ed.js"
+    "static/js/main.abf57744.js"
   ]
 }
