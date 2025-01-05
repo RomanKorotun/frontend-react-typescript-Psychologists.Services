@@ -27,13 +27,13 @@ export interface IResponseGetReservedTimeForDay
 export interface IResponseAddReservedTimeForDay {
   psychologistId: string;
   clientId: string;
-  date: string;
+  date: Date | null;
   time: string;
   isReserved: boolean;
 }
 
 export interface ISetSelectedDate {
-  date: string | null;
+  date: Date | null;
 }
 
 export interface IGetReservedTimesForDay
