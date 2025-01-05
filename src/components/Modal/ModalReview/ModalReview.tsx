@@ -15,7 +15,7 @@ import {
 import { IModalRevievProps } from "../../../interfaces/authInterfaces";
 import { ReviewShema } from "../../../validationShemas/psychologistShemas";
 import { StarRatingModal } from "../../StarRating/StarRatingModal";
-import { IReview } from "../../../interfaces/psychologistsInterfaces";
+import { IReview } from "../../../interfaces/reviewsInterface";
 import { TextArea } from "../../TextArea/TextArea";
 import { AppDispatch } from "../../../redux/store";
 import { addReviewForLoggedInUser } from "../../../redux/api";
@@ -49,19 +49,21 @@ export const ModalReview: FC<IModalRevievProps> = ({
     };
   }, [isOpenModal]);
 
+  const modalStyles = {
+    overlay: {
+      zIndex: 1000,
+    },
+    content: {
+      zIndex: 1000,
+    },
+  };
+
   return (
     <CustomModalReview
       isOpen={isOpenModal}
       onRequestClose={onToggleModal}
-      contentLabel="Example Modal"
-      style={{
-        overlay: {
-          zIndex: 1000,
-        },
-        content: {
-          zIndex: 1000,
-        },
-      }}
+      contentLabel="Review Modal"
+      style={modalStyles}
     >
       <Formik
         initialValues={{

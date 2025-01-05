@@ -36,19 +36,21 @@ export const ModalRegister: FC<IModalProps> = ({
     onToggleModal();
   };
 
+  const modalStyles = {
+    overlay: {
+      zIndex: 1000,
+    },
+    content: {
+      zIndex: 1000,
+    },
+  };
+
   return (
     <CustomModalRegister
       isOpen={isOpenModal}
       onRequestClose={onToggleModal}
-      contentLabel="Example Modal"
-      style={{
-        overlay: {
-          zIndex: 1000,
-        },
-        content: {
-          zIndex: 1000,
-        },
-      }}
+      contentLabel="Register Modal"
+      style={modalStyles}
     >
       <Formik
         initialValues={{

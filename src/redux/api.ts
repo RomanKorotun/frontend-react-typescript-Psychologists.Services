@@ -4,13 +4,16 @@ import { IUserRegister, IUserLogin } from "../interfaces/authInterfaces";
 import {
   IAllPpsychologists,
   IAllPpsychologistsFavorite,
-  IAppointment,
   IParamsId,
-  IGetReservedTimesForDay,
-  IReview,
-  IaddReservedTimesForDay,
 } from "../interfaces/psychologistsInterfaces";
 import { RootState } from "./store";
+import { IReview } from "../interfaces/reviewsInterface";
+import {
+  IaddReservedTimesForDay,
+  IAppointment,
+  IgetAppointmentForNotLoggedInUser,
+  IGetReservedTimesForDay,
+} from "../interfaces/appointmentsInterface";
 
 const { REACT_APP_BASE_URL } = process.env;
 
@@ -22,6 +25,8 @@ const setAuthToken = (token: string) => {
 const clearAuthToken = () => {
   axios.defaults.headers.common.Authorization = "";
 };
+
+// =============================auth================================
 
 export const signup = createAsyncThunk(
   "auth/signup",
@@ -73,8 +78,12 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunlApi) => {
   }
 });
 
-export const psychologistsNotLoggedIn = createAsyncThunk(
-  "psychologists/psychologistsNotLoggedIn",
+// =============================/auth================================
+
+// =============================psychologists========================
+
+export const psychologistsFotNotLoggedInUser = createAsyncThunk(
+  "psychologists/psychologistsFotNotLoggedInUser",
   async ({ page, limit = 3, params }: IAllPpsychologists, thunkApi) => {
     let url = `/api/not-loggedin/psychologists?page=${page}&limit=${limit}`;
     if (params && params !== "standard=all") {
@@ -89,8 +98,8 @@ export const psychologistsNotLoggedIn = createAsyncThunk(
   }
 );
 
-export const psychologistsLoggedIn = createAsyncThunk(
-  "psychologists/psychologistsLoggedIn",
+export const psychologistsForLoggedInUser = createAsyncThunk(
+  "psychologists/psychologistsForLoggedInUser",
   async ({ page, limit = 3, params }: IAllPpsychologists, thunkApi) => {
     let url = `/api/loggedin/psychologists?page=${page}&limit=${limit}`;
     if (params && params !== "standard=all") {
@@ -176,6 +185,9 @@ export const getOnePsychologistForLoggedInUser = createAsyncThunk(
   }
 );
 
+// =============================/psychologists========================
+
+// =============================review================================
 export const addReviewForLoggedInUser = createAsyncThunk(
   "psychologists/addReviewForLoggedInUser",
   async ({ id, ...reviews }: IReview, thunkApi) => {
@@ -186,6 +198,10 @@ export const addReviewForLoggedInUser = createAsyncThunk(
     }
   }
 );
+
+// =============================/review================================
+
+// =============================appointment============================
 
 export const addAppointmentForNotLoggedInUser = createAsyncThunk(
   "appointment/addAppointmentForNotLoggedInUser",
@@ -198,19 +214,19 @@ export const addAppointmentForNotLoggedInUser = createAsyncThunk(
   }
 );
 
-// export const getReservedTimesForDayForNotLoggedInUser = createAsyncThunk(
-//   "appointment/getReservedTimesForDayForNotLoggedInUser",
-//   async ({ psychologistId, date }: IReservedTimeForDay, thunkApi) => {
-//     try {
-//       const response = await axios.get(
-//         `/api/not-loggedin/appointments/${psychologistId}/${date}`
-//       );
-//       return response.data;
-//     } catch (error: any) {
-//       return thunkApi.rejectWithValue(error.message);
-//     }
-//   }
-// );
+export const appointmentIsComplete = createAsyncThunk(
+  "appointment/appointmentIsComplete",
+  async ({ clientId }: IgetAppointmentForNotLoggedInUser, thunkApi) => {
+    try {
+      const response = await axios.get(
+        `/api/not-loggedin/appointments/${clientId}`
+      );
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
 
 export const getReservedTimesForDay = createAsyncThunk(
   "appointment/getReservedTimesForDay",
@@ -231,9 +247,10 @@ export const addReservedTimesForDay = createAsyncThunk(
   async (data: IaddReservedTimesForDay, thunkApi) => {
     try {
       await axios.post(`/api/reserved-times`, data);
-      // return response.data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
     }
   }
 );
+
+// =============================/appointment============================

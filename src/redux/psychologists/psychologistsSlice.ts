@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   psychologistsFavorite,
-  psychologistsLoggedIn,
-  psychologistsNotLoggedIn,
+  psychologistsForLoggedInUser,
+  psychologistsFotNotLoggedInUser,
   updatePsychologistsCardLoggedIn,
   updatePsychologistsCardFavoriteLoggedIn,
   getOnePsychologistForNotLoggedInUser,
@@ -73,35 +73,35 @@ const psychologistsSlice = createSlice({
   },
   extraReducers: (build) =>
     build
-      .addCase(psychologistsNotLoggedIn.pending, (state) => {
+      .addCase(psychologistsFotNotLoggedInUser.pending, (state) => {
         state.error = false;
         state.loading = true;
       })
       .addCase(
-        psychologistsNotLoggedIn.fulfilled,
+        psychologistsFotNotLoggedInUser.fulfilled,
         (state, action: PayloadAction<IResponsePsychologists>) => {
           state.loading = false;
           state.pagesQuantity = action.payload.pagesQuintity;
           state.items = action.payload.items;
         }
       )
-      .addCase(psychologistsNotLoggedIn.rejected, (state) => {
+      .addCase(psychologistsFotNotLoggedInUser.rejected, (state) => {
         state.loading = false;
         state.error = true;
       })
-      .addCase(psychologistsLoggedIn.pending, (state) => {
+      .addCase(psychologistsForLoggedInUser.pending, (state) => {
         state.error = false;
         state.loading = true;
       })
       .addCase(
-        psychologistsLoggedIn.fulfilled,
+        psychologistsForLoggedInUser.fulfilled,
         (state, action: PayloadAction<IResponsePsychologists>) => {
           state.loading = false;
           state.items = action.payload.items;
           state.pagesQuantity = action.payload.pagesQuintity;
         }
       )
-      .addCase(psychologistsLoggedIn.rejected, (state) => {
+      .addCase(psychologistsForLoggedInUser.rejected, (state) => {
         state.loading = false;
         state.error = true;
       })

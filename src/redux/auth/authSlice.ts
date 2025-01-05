@@ -4,7 +4,7 @@ import {
   current,
   logout,
   signin,
-  psychologistsLoggedIn,
+  psychologistsForLoggedInUser,
   psychologistsFavorite,
   updatePsychologistsCardLoggedIn,
 } from "../api";
@@ -103,7 +103,7 @@ const authSlice = createSlice({
         state.email = null;
         state.avatar = null;
       })
-      .addCase(psychologistsLoggedIn.rejected, (state) => {
+      .addCase(psychologistsForLoggedInUser.rejected, (state) => {
         state.isLoggedIn = false;
         state.accessToken = null;
         state.refreshToken = null;

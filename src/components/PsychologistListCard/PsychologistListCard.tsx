@@ -165,24 +165,28 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
         item?.reviews &&
         item.reviews.length > 0 && (
           <ReviewList>
-            {item.reviews.map((review) => (
-              <li key={review._id}>
-                <ReviewerCard>
-                  <ReviewerAvatar>{review.reviewer.slice(0, 1)}</ReviewerAvatar>
-                  <div>
-                    <ReviewerDate>
-                      {format(new Date(review.date), "dd.MM.yyyy")}
-                    </ReviewerDate>
-                    <ReviewerName>{review.reviewer}</ReviewerName>
-                    <StarRatingComment
-                      totalStars={5}
-                      selectedStars={review.rating}
-                    />
-                  </div>
-                </ReviewerCard>
-                <ReviewerComment>{review.comment}</ReviewerComment>
-              </li>
-            ))}
+            {item.reviews
+              .map((review) => (
+                <li key={review._id}>
+                  <ReviewerCard>
+                    <ReviewerAvatar>
+                      {review.reviewer.slice(0, 1)}
+                    </ReviewerAvatar>
+                    <div>
+                      <ReviewerDate>
+                        {format(new Date(review.date), "dd.MM.yyyy")}
+                      </ReviewerDate>
+                      <ReviewerName>{review.reviewer}</ReviewerName>
+                      <StarRatingComment
+                        totalStars={5}
+                        selectedStars={review.rating}
+                      />
+                    </div>
+                  </ReviewerCard>
+                  <ReviewerComment>{review.comment}</ReviewerComment>
+                </li>
+              ))
+              .reverse()}
           </ReviewList>
         )}
 

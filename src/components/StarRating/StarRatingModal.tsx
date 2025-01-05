@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { IStarRatingModal } from "../../interfaces/psychologistsInterfaces";
+import { IStarRatingModal } from "../../interfaces/reviewsInterface";
 import sprite from "../../images/icons.svg";
 import { SvgStar } from "./StarRating.styles";
 

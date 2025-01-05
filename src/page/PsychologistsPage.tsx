@@ -1,7 +1,10 @@
 import { FC, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
-import { psychologistsLoggedIn, psychologistsNotLoggedIn } from "../redux/api";
+import {
+  psychologistsForLoggedInUser,
+  psychologistsFotNotLoggedInUser,
+} from "../redux/api";
 import { Container, Section } from "../GlobaStyles";
 import { PsychologistList } from "../components/PsychologistList/PsychologistList";
 import { usePsychologists } from "../hooks/usePsychologists";
@@ -32,20 +35,20 @@ const PsychologistsPage: FC = () => {
 
   useEffect(() => {
     if (isLoggedIn && !isFirstLoginRender.current) {
-      dispatch(psychologistsLoggedIn({ page, params }));
+      dispatch(psychologistsForLoggedInUser({ page, params }));
     }
   }, [dispatch, isLoggedIn, params, page]);
 
   useEffect(() => {
     if (!isLoggedIn && !loadingAuth) {
-      dispatch(psychologistsNotLoggedIn({ page, params }));
+      dispatch(psychologistsFotNotLoggedInUser({ page, params }));
       isFirstNotLoginRender.current = false;
     }
   }, [dispatch, page, isLoggedIn, loadingAuth, params]);
 
   useEffect(() => {
     if (isLoggedIn && !loadingAuth && isFirstLoginRender.current) {
-      dispatch(psychologistsLoggedIn({ page }));
+      dispatch(psychologistsForLoggedInUser({ page }));
       isFirstLoginRender.current = false;
     }
   }, [dispatch, page, isLoggedIn, loadingAuth]);

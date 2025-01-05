@@ -10,7 +10,6 @@ import {
   FormAppointment,
   TitleAppointmentForm,
   ErrMsg,
-  TextAreaStyled,
   PsychologistAvatar,
   PsychologistCard,
   LabelName,
@@ -23,13 +22,15 @@ import {
 import { IModalAppointmentProps } from "../../../interfaces/authInterfaces";
 import { AppDispatch } from "../../../redux/store";
 import { AppointmentShema } from "../../../validationShemas/psychologistShemas";
-import { IAppointment } from "../../../interfaces/psychologistsInterfaces";
-import { TextArea } from "../../TextArea/TextArea";
+import { IAppointment } from "../../../interfaces/appointmentsInterface";
 import "react-datepicker/dist/react-datepicker.css";
 import { SelectDate } from "../../DateAndTimePicker/SelectDate";
 import { SelectTime } from "../../DateAndTimePicker/SelectTime/SelectTime";
 import { CloseModalButton } from "../../CloseModalButton/CloseModalButton";
-import { addAppointmentForNotLoggedInUser } from "../../../redux/api";
+import {
+  addAppointmentForNotLoggedInUser,
+  appointmentIsComplete,
+} from "../../../redux/api";
 import { setClientId } from "../../../redux/appointments/appointmentsSlice";
 import { useAppointments } from "../../../hooks/useAppointments";
 
@@ -43,36 +44,45 @@ export const ModalAppointment: FC<IModalAppointmentProps> = ({
   onToggleModal,
 }) => {
   const { clientId } = useAppointments();
+
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = (values: IAppointment) => {
-    dispatch(addAppointmentForNotLoggedInUser(values));
+    clientId &&
+      dispatch(addAppointmentForNotLoggedInUser({ ...values, clientId }));
     dispatch(setClientId(null));
     onToggleModal();
+  };
+
+  const handleRequestClose = () => {
+    clientId && dispatch(appointmentIsComplete({ clientId }));
+    dispatch(setClientId(null));
+    onToggleModal();
+  };
+
+  const modalStyles = {
+    overlay: {
+      zIndex: 1000,
+    },
+    content: {
+      zIndex: 1000,
+    },
   };
 
   return (
     <CustomModalAppointment
       isOpen={isOpenModal}
-      onRequestClose={onToggleModal}
-      contentLabel="Example Modal"
-      style={{
-        overlay: {
-          zIndex: 1000,
-        },
-        content: {
-          zIndex: 1000,
-        },
-      }}
+      onRequestClose={handleRequestClose}
+      contentLabel="Appointment Modal"
+      style={modalStyles}
     >
       <Formik
         initialValues={{
           psychologistId: id,
-          clientId: clientId || "",
+          clientId: "",
           client_name: "",
           client_phone: "",
           client_email: "",
-          // comment: "",
           date: null,
           time: "",
         }}
@@ -137,7 +147,7 @@ export const ModalAppointment: FC<IModalAppointmentProps> = ({
                 <WrapperTimeField>
                   <SelectTime
                     psychologistId={id}
-                    value={values.time || ""}
+                    value={values.time}
                     setFieldValue={setFieldValue}
                   />
                   <ErrMsg component="div" name="time" />
@@ -150,7 +160,7 @@ export const ModalAppointment: FC<IModalAppointmentProps> = ({
         )}
       </Formik>
 
-      <CloseModalButton onClick={onToggleModal} />
+      <CloseModalButton onClick={handleRequestClose} />
     </CustomModalAppointment>
   );
 };
