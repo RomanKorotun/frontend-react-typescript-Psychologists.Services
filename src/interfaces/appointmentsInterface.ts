@@ -33,7 +33,7 @@ export interface IResponseAddReservedTimeForDay {
 }
 
 export interface ISetSelectedDate {
-  date: Date | null;
+  date: string | null;
 }
 
 export interface IGetReservedTimesForDay
@@ -44,6 +44,6 @@ export interface IgetAppointmentForNotLoggedInUser
 
 export interface IaddReservedTimesForDay
   extends Pick<IAppointment, "psychologistId" | "time"> {
-  date: string;
+  date: Date;
   clientId: string;
 }

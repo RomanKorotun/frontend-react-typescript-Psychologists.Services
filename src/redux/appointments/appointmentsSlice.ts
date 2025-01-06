@@ -21,7 +21,6 @@ const appointmentsSlice = createSlice({
       state.selectedDate = action.payload.date;
     },
     setClientId: (state, action: PayloadAction<string | null>) => {
-      console.log("action", action);
       state.clientId = action.payload;
     },
     setAddReservedTimesForDay: (

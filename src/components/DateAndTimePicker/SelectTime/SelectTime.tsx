@@ -4,7 +4,10 @@ import { nanoid } from "nanoid";
 import { SelectTimeStyled } from "./SelectTime.styled";
 import { useAppointments } from "../../../hooks/useAppointments";
 import { AppDispatch } from "../../../redux/store";
-import { addReservedTimesForDay } from "../../../redux/api";
+import {
+  addReservedTimesForDay,
+  appointmentIsComplete,
+} from "../../../redux/api";
 import {
   setAddReservedTimesForDay,
   setClientId,
@@ -26,6 +29,7 @@ export const SelectTime: FC<ISelectTimeProps> = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const { selectedDate, reservedTimes, clientId } = useAppointments();
+  const date = selectedDate ? new Date(selectedDate) : null;
 
   const handleTimeChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const time = event.target.value;
@@ -35,11 +39,11 @@ export const SelectTime: FC<ISelectTimeProps> = ({
     const newClientId = clientId || nanoid();
     !clientId && dispatch(setClientId(newClientId));
 
-    selectedDate &&
+    date &&
       dispatch(
         addReservedTimesForDay({
           psychologistId,
-          date: selectedDate,
+          date,
           time,
           clientId: clientId || newClientId,
         })
@@ -53,6 +57,16 @@ export const SelectTime: FC<ISelectTimeProps> = ({
       });
     }
   }, [dispatch, socket, selectedDate]);
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      clientId && dispatch(appointmentIsComplete({ clientId }));
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [dispatch, clientId]);
 
   return (
     <SelectTimeStyled
