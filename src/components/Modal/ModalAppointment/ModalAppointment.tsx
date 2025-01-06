@@ -2,6 +2,7 @@ import { FC } from "react";
 import { useDispatch } from "react-redux";
 import Modal from "react-modal";
 import { Formik } from "formik";
+import { format } from "date-fns";
 import {
   ButtonSubmit,
   CustomModalAppointment,
@@ -54,7 +55,7 @@ export const ModalAppointment: FC<IModalAppointmentProps> = ({
       dispatch(
         addAppointmentForNotLoggedInUser({
           ...values,
-          date: new Date(values.date),
+          date: new Date(format(values.date, "yyyy-MM-dd")),
           clientId,
         })
       );
