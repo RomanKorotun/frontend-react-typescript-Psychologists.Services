@@ -55,6 +55,9 @@ export const SelectTime: FC<ISelectTimeProps> = ({
       socket.on("newReservedTime", (reservedTimes) => {
         dispatch(setAddReservedTimesForDay(reservedTimes));
       });
+      return () => {
+        socket.off("newReservedTime");
+      };
     }
   }, [dispatch, socket, selectedDate]);
 
