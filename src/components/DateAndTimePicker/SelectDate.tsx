@@ -21,10 +21,7 @@ export const SelectDate: FC<ISelectDateProps> = ({
 
   const handleDateChange = (date: Date | null) => {
     setFieldValue("date", date);
-
-    // date && dispatch(setSelectedDate({ date: date.toLocaleString() }));
     date && dispatch(setSelectedDate({ date: format(date, "yyyy-MM-dd") }));
-    // dispatch(getReservedTimesForDay({ psychologistId, date }));
     date && dispatch(getReservedTimesForDay({ psychologistId, date }));
   };
 

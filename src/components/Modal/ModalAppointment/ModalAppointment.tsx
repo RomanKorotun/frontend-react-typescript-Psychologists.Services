@@ -49,7 +49,6 @@ export const ModalAppointment: FC<IModalAppointmentProps> = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = (values: IAppointment) => {
-    console.log("values", values);
     clientId &&
       values.date &&
       dispatch(

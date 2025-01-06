@@ -31,8 +31,6 @@ export const SelectTime: FC<ISelectTimeProps> = ({
   const { selectedDate, reservedTimes, clientId } = useAppointments();
   const date = selectedDate ? new Date(selectedDate) : null;
 
-  console.log("date", date);
-
   const handleTimeChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const time = event.target.value;
 
