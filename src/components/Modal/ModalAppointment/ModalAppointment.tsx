@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useDispatch } from "react-redux";
 import Modal from "react-modal";
 import { Formik } from "formik";
@@ -48,8 +48,16 @@ export const ModalAppointment: FC<IModalAppointmentProps> = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = (values: IAppointment) => {
+    console.log("values", values);
     clientId &&
-      dispatch(addAppointmentForNotLoggedInUser({ ...values, clientId }));
+      values.date &&
+      dispatch(
+        addAppointmentForNotLoggedInUser({
+          ...values,
+          date: new Date(values.date),
+          clientId,
+        })
+      );
     dispatch(setClientId(null));
     onToggleModal();
   };
