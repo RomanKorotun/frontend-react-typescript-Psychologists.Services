@@ -5,7 +5,8 @@ export interface IAppointment {
   client_phone: string;
   client_email: string;
   // comment: string;
-  date: Date | null;
+  // date: Date | null;
+  date: string | null;
   time: string;
 }
 
@@ -44,6 +45,7 @@ export interface IgetAppointmentForNotLoggedInUser
 
 export interface IaddReservedTimesForDay
   extends Pick<IAppointment, "psychologistId" | "time"> {
-  date: Date;
+  // date: Date;
+  date: string;
   clientId: string;
 }

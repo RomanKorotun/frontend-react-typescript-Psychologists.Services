@@ -54,7 +54,8 @@ export const ModalAppointment: FC<IModalAppointmentProps> = ({
       dispatch(
         addAppointmentForNotLoggedInUser({
           ...values,
-          date: new Date(format(values.date, "yyyy-MM-dd")),
+          // date: new Date(format(values.date, "yyyy-MM-dd")),
+          date: format(values.date, "yyyy-MM-dd"),
           clientId,
         })
       );

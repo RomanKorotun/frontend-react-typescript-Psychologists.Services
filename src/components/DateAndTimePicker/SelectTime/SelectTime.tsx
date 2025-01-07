@@ -29,7 +29,7 @@ export const SelectTime: FC<ISelectTimeProps> = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const { selectedDate, reservedTimes, clientId } = useAppointments();
-  const date = selectedDate ? new Date(selectedDate) : null;
+  // const date = selectedDate ? new Date(selectedDate) : null;
 
   const handleTimeChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const time = event.target.value;
@@ -39,11 +39,20 @@ export const SelectTime: FC<ISelectTimeProps> = ({
     const newClientId = clientId || nanoid();
     !clientId && dispatch(setClientId(newClientId));
 
-    date &&
+    // date &&
+    //   dispatch(
+    //     addReservedTimesForDay({
+    //       psychologistId,
+    //       date,
+    //       time,
+    //       clientId: clientId || newClientId,
+    //     })
+    //   );
+    selectedDate &&
       dispatch(
         addReservedTimesForDay({
           psychologistId,
-          date,
+          date: selectedDate,
           time,
           clientId: clientId || newClientId,
         })
@@ -60,6 +69,12 @@ export const SelectTime: FC<ISelectTimeProps> = ({
       };
     }
   }, [dispatch, socket, selectedDate]);
+
+  useEffect(() => {
+    if (selectedDate) {
+      setFieldValue("time", "");
+    }
+  }, [selectedDate, setFieldValue]);
 
   useEffect(() => {
     const handleBeforeUnload = () => {

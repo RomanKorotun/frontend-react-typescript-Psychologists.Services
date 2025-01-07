@@ -22,7 +22,14 @@ export const SelectDate: FC<ISelectDateProps> = ({
   const handleDateChange = (date: Date | null) => {
     setFieldValue("date", date);
     date && dispatch(setSelectedDate({ date: format(date, "yyyy-MM-dd") }));
-    date && dispatch(getReservedTimesForDay({ psychologistId, date }));
+    // date && dispatch(getReservedTimesForDay({ psychologistId, date }));
+    date &&
+      dispatch(
+        getReservedTimesForDay({
+          psychologistId,
+          date: format(date, "yyyy-MM-dd"),
+        })
+      );
   };
 
   useEffect(() => {
