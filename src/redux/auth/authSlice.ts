@@ -7,11 +7,13 @@ import {
   psychologistsForLoggedInUser,
   psychologistsFavorite,
   updatePsychologistsCardLoggedIn,
+  updateAvatar,
 } from "../api";
 import {
   IAuthResponse,
   IResponseCurrent,
   IAuthState,
+  IResponceUpdateAvatar,
 } from "../../interfaces/authInterfaces";
 
 const initialState: IAuthState = {
@@ -126,7 +128,13 @@ const authSlice = createSlice({
         state.username = null;
         state.email = null;
         state.avatar = null;
-      }),
+      })
+      .addCase(
+        updateAvatar.fulfilled,
+        (state, action: PayloadAction<IResponceUpdateAvatar>) => {
+          state.avatar = action.payload.avatar;
+        }
+      ),
 });
 
 export const authReducer = authSlice.reducer;

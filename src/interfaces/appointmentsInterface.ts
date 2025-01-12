@@ -10,6 +10,12 @@ export interface IAppointment {
   time: string;
 }
 
+export interface IAppointmentForLoggedInUser
+  extends Pick<
+    IAppointment,
+    "psychologistId" | "clientId" | "client_phone" | "date" | "time"
+  > {}
+
 interface ITimeSlot {
   time: string;
   isReserved: boolean;

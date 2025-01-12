@@ -11,6 +11,7 @@ import { IReview } from "../interfaces/reviewsInterface";
 import {
   IaddReservedTimesForDay,
   IAppointment,
+  IAppointmentForLoggedInUser,
   IgetAppointmentForNotLoggedInUser,
   IGetReservedTimesForDay,
 } from "../interfaces/appointmentsInterface";
@@ -47,6 +48,19 @@ export const signin = createAsyncThunk(
     try {
       const response = await axios.post("/api/auth/signin", user);
       setAuthToken(response.data.accessToken);
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateAvatar = createAsyncThunk(
+  "auth/updateAvatar",
+  async (data: FormData, thunkApi) => {
+    try {
+      const response = await axios.put("/api/auth/avatar", data);
+      console.log(response.data);
       return response.data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
@@ -208,6 +222,17 @@ export const addAppointmentForNotLoggedInUser = createAsyncThunk(
   async (appointment: IAppointment, thunkApi) => {
     try {
       await axios.post("/api/not-loggedin/appointments", appointment);
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const addAppointmentForLoggedInUser = createAsyncThunk(
+  "appointment/addAppointmentForLoggedInUser",
+  async (appointment: IAppointmentForLoggedInUser, thunkApi) => {
+    try {
+      await axios.post("/api/loggedin/appointments", appointment);
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
     }

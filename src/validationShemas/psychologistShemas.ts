@@ -19,3 +19,9 @@ export const AppointmentShema = Yup.object().shape({
   date: Yup.date().required("Required"),
   time: Yup.string().required("Required"),
 });
+
+export const AppointmentForLoggedInUserShema = Yup.object().shape({
+  client_phone: Yup.string().required("Required"),
+  date: Yup.date().required("Required"),
+  time: Yup.string().required("Required"),
+});

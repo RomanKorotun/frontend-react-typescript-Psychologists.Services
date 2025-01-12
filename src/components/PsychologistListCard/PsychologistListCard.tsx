@@ -44,7 +44,8 @@ import { IItemProps } from "../../interfaces/psychologistsInterfaces.ts";
 import { ModalReview } from "../Modal/ModalReview/ModalReview.tsx";
 import { useLocation } from "react-router-dom";
 import { StarRatingComment } from "../StarRating/StarRatingComment.tsx";
-import { ModalAppointment } from "../Modal/ModalAppointment/ModalAppointment.tsx";
+import { ModalAppointmentForNotLoggedInUser } from "../Modal/ModalAppointment/ModalAppointmentForNotLoggedInUser..tsx";
+import { ModalAppointmentForLoggedInUser } from "../Modal/ModalAppointment/ModalAppointmentForLoggedInUser.tsx";
 
 export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
   const [isOpenReviewModal, setIsOpenReviewModal] = useState<boolean>(false);
@@ -198,19 +199,33 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
           </NotFoundMessage>
         )}
 
-      <ModalAppointment
-        id={item._id}
-        avatar={item.avatar_url}
-        name={item.name}
-        isOpenModal={isOpenModalAppointment}
-        onToggleModal={toggleAppointmentModal}
-      />
+      {!isLoggedIn && (
+        <ModalAppointmentForNotLoggedInUser
+          id={item._id}
+          avatar={item.avatar_url}
+          name={item.name}
+          isOpenModal={isOpenModalAppointment}
+          onToggleModal={toggleAppointmentModal}
+        />
+      )}
 
-      <ModalReview
-        id={item._id}
-        isOpenModal={isOpenReviewModal}
-        onToggleModal={toggleReviewModal}
-      />
+      {isLoggedIn && (
+        <ModalAppointmentForLoggedInUser
+          id={item._id}
+          avatar={item.avatar_url}
+          name={item.name}
+          isOpenModal={isOpenModalAppointment}
+          onToggleModal={toggleAppointmentModal}
+        />
+      )}
+
+      {isLoggedIn && (
+        <ModalReview
+          id={item._id}
+          isOpenModal={isOpenReviewModal}
+          onToggleModal={toggleReviewModal}
+        />
+      )}
     </>
   );
 };

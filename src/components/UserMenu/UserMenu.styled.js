@@ -12,7 +12,14 @@ export const User = styled.div`
 `;
 
 export const Avatar = styled.img`
-  border-radius: 10px;
+  width: 50px;
+  height: 50px;
+  /* border-radius: 10px; */
+  border-radius: 50px;
+  &:hover,
+  &:focus {
+    cursor: pointer;
+  }
 `;
 
 export const Button = styled.button`
@@ -25,4 +32,10 @@ export const Button = styled.button`
   line-height: 1.25;
   letter-spacing: -0.01em;
   color: #191a15;
+  transition: transform 250ms, background-color 250ms;
+  &:hover,
+  &:focus {
+    transform: scale(1.01);
+    background-color: #fbfbfb;
+  }
 `;

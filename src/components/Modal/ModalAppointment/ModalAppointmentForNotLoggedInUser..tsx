@@ -37,7 +37,7 @@ import { useAppointments } from "../../../hooks/useAppointments";
 
 Modal.setAppElement("#root");
 
-export const ModalAppointment: FC<IModalAppointmentProps> = ({
+export const ModalAppointmentForNotLoggedInUser: FC<IModalAppointmentProps> = ({
   id,
   avatar,
   name,

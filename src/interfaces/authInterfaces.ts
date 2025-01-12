@@ -15,6 +15,14 @@ export interface IModalAppointmentProps extends IModalAuthProps {
   name: string;
 }
 
+export interface IAvatarUpload {
+  avatar: File | null;
+}
+
+export interface IModalAvatarUploadProps extends IModalAuthProps {
+  avatar: string;
+}
+
 export interface IModalProps {
   isOpenModal: boolean;
   onToggleModal: () => void;
@@ -54,4 +62,8 @@ export interface IAuthState {
 export interface IPrivateRouteProps {
   redirectTo: string;
   page: ReactNode;
+}
+
+export interface IResponceUpdateAvatar {
+  avatar: string;
 }
