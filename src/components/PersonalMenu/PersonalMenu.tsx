@@ -24,7 +24,8 @@ export const PersonalMenu = forwardRef<HTMLUListElement, IPersonalMenuProps>(
       dispatch(setFilter({ filter: "Default" }));
       dispatch(resetPsychologistsState());
       dispatch(resetPsychologistsFavoriteState());
-      navigate("/psychologists");
+      // navigate("/psychologists");
+      navigate("/");
     };
 
     return (
