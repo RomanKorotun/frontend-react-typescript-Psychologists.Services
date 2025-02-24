@@ -8,7 +8,7 @@ export const CustomModalAppointment = styled(Modal)`
   top: 50%;
   left: 50%;
   border: 1px solid #71736f;
-  background-color: #fbfbfb;
+  background-color: ${({ theme }) => theme.bgColors.secondaryBgColor};
   transform: translate(-50%, -50%);
   overflow: auto;
   width: 90%;
@@ -31,7 +31,7 @@ export const TitleAppointmentForm = styled.div`
   }
   line-height: 1.2;
   letter-spacing: -0.02em;
-  color: #191a15;
+  color: ${({ theme }) => theme.colors.primaryColor};
   margin-bottom: 14px;
 `;
 
@@ -61,7 +61,7 @@ export const PsychologistAvatar = styled.img`
 export const LabelName = styled.div`
   font-weight: 500;
   font-size: 12px;
-  color: #8a8a89;
+  color: ${({ theme }) => theme.colors.secondaryColor};
   margin-bottom: 4px;
 `;
 
@@ -69,7 +69,7 @@ export const Name = styled.div`
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
-  color: #191a15;
+  color: ${({ theme }) => theme.colors.primaryColor};
 `;
 
 export const FormAppointment = styled(Form)`
@@ -91,7 +91,7 @@ export const WrapperDateAndTime = styled.div`
 export const WrapperDateField = styled.div`
   position: relative;
   .react-datepicker__input-container input {
-    border: 1px solid #e9eae9;
+    border: 1px solid ${({ theme }) => theme.colors.fieldFormColor};
     border-radius: 12px;
     padding-left: 12px;
     height: 38px;
@@ -100,12 +100,9 @@ export const WrapperDateField = styled.div`
       font-weight: 400;
       font-size: 16px;
       line-height: 1.25;
-      color: #191a15;
+      color: ${({ theme }) => theme.colors.primaryColor};
     }
   }
-  /* .react-datepicker__time-list-item--disabled {
-    display: none !important;
-  } */
 `;
 
 export const WrapperTimeField = styled.div`
@@ -113,7 +110,7 @@ export const WrapperTimeField = styled.div`
 `;
 
 export const FieldStyled = styled(Field)`
-  border: 1px solid #e9eae9;
+  border: 1px solid ${({ theme }) => theme.colors.fieldFormColor};
   border-radius: 12px;
   padding-left: 12px;
   height: 38px;
@@ -122,24 +119,7 @@ export const FieldStyled = styled(Field)`
     font-weight: 400;
     font-size: 16px;
     line-height: 1.25;
-    color: #191a15;
-  }
-`;
-
-export const TextAreaStyled = styled(Field)`
-  display: block;
-  min-height: 70px;
-  resize: none;
-  border: 1px solid #e9eae9;
-  border-radius: 12px;
-  padding-top: 12px;
-  padding-left: 12px;
-  width: 100%;
-  &::placeholder {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.25;
-    color: #191a15;
+    color: ${({ theme }) => theme.colors.primaryColor};
   }
 `;
 
@@ -148,7 +128,7 @@ export const ErrMsg = styled(ErrorMessage)`
   position: absolute;
   bottom: -14px;
   left: 5px;
-  color: #eb4c42;
+  color: ${({ theme }) => theme.colors.errorColor};
 `;
 
 export const ButtonSubmit = styled.button`
@@ -160,6 +140,12 @@ export const ButtonSubmit = styled.button`
   letter-spacing: -0.01em;
   color: #fbfbfb;
   border-radius: 30px;
-  background-color: #54be96;
+  background-color: ${({ theme }) => theme.bgColors.accentBgColor};
   border: none;
+  transition: transform 250ms, background-color 250ms;
+  &:hover,
+  &:focus {
+    transform: scale(1.01);
+    background-color: ${({ theme }) => theme.bgColors.activeAccentBgColor};
+  }
 `;

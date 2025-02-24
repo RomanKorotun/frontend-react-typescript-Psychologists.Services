@@ -8,6 +8,6 @@ export const Title = styled.div`
   font-weight: 500;
   font-size: 14px;
   line-height: 129%;
-  color: #8a8a89;
+  color: ${({ theme }) => theme.colors.secondaryColor};
   margin-bottom: 8px;
 `;

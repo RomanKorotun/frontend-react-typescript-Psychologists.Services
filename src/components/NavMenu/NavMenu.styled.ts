@@ -11,7 +11,7 @@ export const NavStyled = styled.nav`
   font-size: 16px;
   line-height: 1.25;
   letter-spacing: -0.01em;
-  color: #191a15;
+  color: ${({ theme }) => theme.colors.primaryColor};
 `;
 
 export const LinkNavStyled = styled(NavLink)`

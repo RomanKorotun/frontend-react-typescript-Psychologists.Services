@@ -5,6 +5,7 @@ import { useAuth } from "./hooks/useAuth";
 import { AppDispatch } from "./redux/store";
 import { current } from "./redux/api";
 import { RoutesList } from "./routes/RoutesList";
+import { SocketProvider } from "./contexts/SocketContext";
 
 export const App: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,7 +16,7 @@ export const App: FC = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <SocketProvider>
       {isRefreshing ? (
         <div>Refresh user....</div>
       ) : (
@@ -24,6 +25,6 @@ export const App: FC = () => {
           <Toaster position="top-right" />
         </>
       )}
-    </>
+    </SocketProvider>
   );
 };

@@ -17,13 +17,26 @@ import {
 import { usePsychologists } from "../../hooks/usePsychologists";
 import { getFilterKeyValue } from "../../helpers/getFilterKeyValue";
 
-const Autocomplete = styled(MuiAutocomplete<string, false, false>)({
-  width: "290px",
-  ".MuiOutlinedInput-root": {
-    padding: "16px !important",
-    borderRadius: "14px",
-  },
-});
+interface IAutocompleteProps {
+  options: string[];
+  value: string | null;
+  onChange: (event: SyntheticEvent, newValue: string | null) => void;
+}
+
+const Autocomplete = styled(MuiAutocomplete)<IAutocompleteProps>(
+  ({ theme }) => ({
+    width: "290px",
+    ".MuiOutlinedInput-root": {
+      backgroundColor: theme.colors.accentColor,
+      color: "#fbfbfb",
+      padding: "16px !important",
+      borderRadius: "14px",
+    },
+    ".MuiAutocomplete-popupIndicator": {
+      color: "#fbfbfb",
+    },
+  })
+);
 
 const TextField = styled(MuiTextField)({
   "& .MuiInputBase-input": {
@@ -34,17 +47,17 @@ const TextField = styled(MuiTextField)({
 
 export const Filters: FC = () => {
   const { filter } = usePsychologists();
-
   const dispatch = useDispatch<AppDispatch>();
-
   const { changeFilterUrl } = useFilters();
 
   const handleChange = (_: SyntheticEvent, newValue: string | null) => {
-    const { key, value } = getFilterKeyValue(newValue);
-    dispatch(setPage({ page: 1 }));
-    dispatch(setPageFavorite({ page: 1 }));
-    dispatch(setFilter({ filter: newValue }));
-    changeFilterUrl(key, value);
+    if (newValue) {
+      const { key, value } = getFilterKeyValue(newValue);
+      dispatch(setPage({ page: 1 }));
+      dispatch(setPageFavorite({ page: 1 }));
+      dispatch(setFilter({ filter: newValue }));
+      changeFilterUrl(key, value);
+    }
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -62,7 +75,9 @@ export const Filters: FC = () => {
       <Title>Filters</Title>
       <Autocomplete
         options={filterOptions}
-        getOptionLabel={(option: string) => option}
+        getOptionLabel={(option: unknown) =>
+          typeof option === "string" ? option : ""
+        }
         renderInput={(params) => <TextField {...params} />}
         value={filter}
         onChange={handleChange}

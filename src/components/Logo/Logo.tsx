@@ -4,7 +4,7 @@ import { LinkLogoStyled, LogoAccentColor } from "./Logo.styled";
 export const Logo: FC = () => {
   return (
     <LinkLogoStyled to="/">
-      psychologists.<LogoAccentColor>services</LogoAccentColor>
+      <LogoAccentColor>psychologists.</LogoAccentColor>services
     </LinkLogoStyled>
   );
 };

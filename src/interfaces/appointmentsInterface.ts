@@ -4,8 +4,6 @@ export interface IAppointment {
   client_name: string;
   client_phone: string;
   client_email: string;
-  // comment: string;
-  // date: Date | null;
   date: string | null;
   time: string;
 }
@@ -22,10 +20,40 @@ interface ITimeSlot {
   clientId: string | null;
 }
 
+export interface IResponseGetAppointmentsForLoggedInUser {
+  _id: string;
+  date: string;
+  time: string;
+  psychologistId: {
+    _id: string;
+    avatar_url: string;
+    name: string;
+    price_per_hour: string;
+    rating: string;
+  };
+}
+
+export interface IResponseGetAppointmentForLoggedInUser {
+  _id: string;
+  date: string;
+  time: string;
+  meetingLink: string;
+  psychologistId: {
+    _id: string;
+    name: string;
+  };
+}
+
 export interface IAppointmentsState {
+  loading: boolean;
+  error: boolean;
   selectedDate: string | null;
   reservedTimes: ITimeSlot[];
   clientId: string | null;
+  appointmentsList: IResponseGetAppointmentsForLoggedInUser[];
+  appointment: null | IResponseGetAppointmentForLoggedInUser;
+  paymentInfo: string;
+  paymentSignature: string;
 }
 
 export interface IResponseGetReservedTimeForDay
@@ -49,9 +77,20 @@ export interface IGetReservedTimesForDay
 export interface IgetAppointmentForNotLoggedInUser
   extends Pick<IResponseAddReservedTimeForDay, "clientId"> {}
 
-export interface IaddReservedTimesForDay
+export interface IAddReservedTimesForDay
   extends Pick<IAppointment, "psychologistId" | "time"> {
-  // date: Date;
   date: string;
   clientId: string;
+}
+
+export interface ICreatePayment {
+  amount: number;
+  currency: string;
+  description: string;
+  orderId: string;
+}
+
+export interface IResponseCreatePayment {
+  data: string;
+  signature: string;
 }

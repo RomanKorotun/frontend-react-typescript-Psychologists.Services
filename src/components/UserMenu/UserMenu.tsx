@@ -1,40 +1,55 @@
-import { FC, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { FC, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { Avatar, Button, User, UserMenuCard } from "./UserMenu.styled";
-import { AppDispatch } from "../../redux/store";
-import { logout } from "../../redux/api";
-import {
-  resetPsychologistsFavoriteState,
-  resetPsychologistsState,
-  setFilter,
-} from "../../redux/psychologists/psychologistsSlice";
+import { Avatar, User, UserMenuCard } from "./UserMenu.styled";
 import { ModalAvatarUpload } from "../Modal/ModalAvatarUpload/ModalAvatarUpload";
+import { PersonalMenu } from "../PersonalMenu/PersonalMenu";
 
 export const UserMenu: FC = () => {
   const [isOpenAvatarUploadModal, setIsOpenAvatarUploadModal] =
     useState<boolean>(false);
+  const [isVisibleMenu, setIsVisibleMenu] = useState<boolean>(false);
+
+  const dropdownRef = useRef<HTMLUListElement | null>(null);
+  const nameRef = useRef<HTMLParagraphElement | null>(null);
+
   const { avatar, username } = useAuth();
-  const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
 
   const toggleAvatarUploadModal = () => {
     setIsOpenAvatarUploadModal((prevState: boolean) => !prevState);
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
-    dispatch(setFilter({ filter: "Default" }));
-    dispatch(resetPsychologistsState());
-    dispatch(resetPsychologistsFavoriteState());
-    navigate("/psychologists");
+  const toggleVisibleMenu = () => {
+    setIsVisibleMenu((prevState: boolean) => !prevState);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef?.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        nameRef?.current &&
+        !nameRef.current.contains(event.target as Node)
+      ) {
+        setIsVisibleMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
       <UserMenuCard>
         <User>
+          <p
+            ref={nameRef}
+            onClick={toggleVisibleMenu}
+            style={{ cursor: "pointer" }}
+          >
+            {username}
+          </p>
           {avatar && (
             <Avatar
               src={avatar}
@@ -42,9 +57,13 @@ export const UserMenu: FC = () => {
               onClick={toggleAvatarUploadModal}
             />
           )}
-          <p>{username}</p>
         </User>
-        <Button onClick={handleLogout}>Log out</Button>
+        {isVisibleMenu && (
+          <PersonalMenu
+            ref={dropdownRef}
+            onToggleVisibleMenu={toggleVisibleMenu}
+          />
+        )}
       </UserMenuCard>
 
       {avatar && (

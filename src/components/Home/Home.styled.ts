@@ -21,7 +21,7 @@ export const Title = styled.h1`
   font-weight: 600;
   line-height: 1.025;
   letter-spacing: -0.02em;
-  color: #191a15;
+  color: ${({ theme }) => theme.colors.primaryColor};
   margin-bottom: 20px;
   font-size: 32px;
   @media only screen and (min-width: 400px) {
@@ -52,7 +52,7 @@ export const Title = styled.h1`
 
 export const TitleAccent = styled.span`
   font-style: italic;
-  color: #54be96;
+  color: ${({ theme }) => theme.colors.accentColor};
 `;
 
 export const SubTitle = styled.p`
@@ -60,7 +60,7 @@ export const SubTitle = styled.p`
   font-size: 18px;
   line-height: 1.33333;
   letter-spacing: -0.02em;
-  color: #191a15;
+  color: ${({ theme }) => theme.colors.primaryColor};
   max-width: 510px;
   margin-bottom: 40px;
   @media only screen and (max-width: 599px) {
@@ -73,7 +73,7 @@ export const SubTitle = styled.p`
 
 export const LinkHomeStyled = styled(Link)`
   display: inline-block;
-  background-color: #54be96;
+  background-color: ${({ theme }) => theme.bgColors.accentBgColor};
   border-radius: 30px;
   font-weight: 500;
   line-height: 1.2;
@@ -83,7 +83,7 @@ export const LinkHomeStyled = styled(Link)`
   &:hover,
   &:focus {
     transform: scale(1.01);
-    background-color: #36a379;
+    background-color: ${({ theme }) => theme.bgColors.activeAccentBgColor};
   }
 
   @media only screen and (max-width: 599px) {

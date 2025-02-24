@@ -31,7 +31,11 @@ const initialState: IAuthState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    clearModalError: (state) => {
+      state.error = false;
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(signup.pending, (state) => {
@@ -70,6 +74,10 @@ const authSlice = createSlice({
           state.refreshToken = action.payload.refreshToken;
         }
       )
+      .addCase(signin.rejected, (state) => {
+        state.loading = false;
+        state.error = true;
+      })
       .addCase(current.pending, (state) => {
         state.error = false;
         state.isRefreshing = true;
@@ -138,3 +146,5 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
+
+export const { clearModalError } = authSlice.actions;

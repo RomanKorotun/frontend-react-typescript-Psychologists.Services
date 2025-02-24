@@ -5,7 +5,9 @@ interface IPsychologistsItem {
   experience: string;
   reviews?: {
     _id: string;
+    clientId: string;
     reviewer: string;
+    avatar: string;
     rating: number;
     comment: string;
     date: string;
@@ -42,6 +44,28 @@ export interface IFilter {
 }
 
 export interface IResponsePsychologistsItem extends IPsychologistsItem {}
+
+interface IReview {
+  _id: string;
+  clientId: string;
+  reviewer: string;
+  avatar: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+
+export interface IResponseAddNewReview {
+  _id: string;
+  rating: number;
+  reviews: IReview[];
+}
+
+export interface IResponseNewAvatarForComment {
+  psychologistsIds: string[];
+  userId: string;
+  newAvatar: string;
+}
 
 export interface IItemProps {
   item: IResponsePsychologistsItem;

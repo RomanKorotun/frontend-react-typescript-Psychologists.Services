@@ -10,8 +10,8 @@ export const ButtonLogin = styled.button`
     font-size: 13px;
     padding: 12px 28px;
   }
-  background-color: #f3f3f3;
-  border: 1px solid #cacecb;
+  background-color: ${({ theme }) => theme.bgColors.primaryBgColor};
+  border: 1px solid ${({ theme }) => theme.colors.secondaryColor};
   border-radius: 30px;
   padding: 14px 39px;
   font-weight: 500;
@@ -23,7 +23,7 @@ export const ButtonLogin = styled.button`
   &:hover,
   &:focus {
     transform: scale(1.01);
-    background-color: #fbfbfb;
+    background-color: ${({ theme }) => theme.bgColors.activeBgColor};
   }
 `;
 
@@ -32,7 +32,7 @@ export const ButtonRegister = styled.button`
     font-size: 13px;
     padding: 12px 28px;
   }
-  background-color: #54be96;
+  background-color: ${({ theme }) => theme.bgColors.accentBgColor};
   border-radius: 30px;
   padding: 14px 39px;
   font-weight: 500;
@@ -45,6 +45,6 @@ export const ButtonRegister = styled.button`
   &:hover,
   &:focus {
     transform: scale(1.01);
-    background-color: #36a379;
+    background-color: ${({ theme }) => theme.bgColors.activeAccentBgColor};
   }
 `;

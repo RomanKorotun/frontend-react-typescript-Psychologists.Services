@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useState } from "react";
+import { FC, MouseEvent, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { format } from "date-fns";
 import toast from "react-hot-toast";
@@ -39,13 +39,20 @@ import {
   updatePsychologistsCardLoggedIn,
 } from "../../redux/api.ts";
 import { usePsychologists } from "../../hooks/usePsychologists.ts";
-import { setClearFavoriteItem } from "../../redux/psychologists/psychologistsSlice.ts";
+import {
+  setClearFavoriteItem,
+  setNewAvatarForComment,
+  setNewReview,
+} from "../../redux/psychologists/psychologistsSlice.ts";
 import { IItemProps } from "../../interfaces/psychologistsInterfaces.ts";
 import { ModalReview } from "../Modal/ModalReview/ModalReview.tsx";
 import { useLocation } from "react-router-dom";
 import { StarRatingComment } from "../StarRating/StarRatingComment.tsx";
 import { ModalAppointmentForNotLoggedInUser } from "../Modal/ModalAppointment/ModalAppointmentForNotLoggedInUser..tsx";
 import { ModalAppointmentForLoggedInUser } from "../Modal/ModalAppointment/ModalAppointmentForLoggedInUser.tsx";
+import { useSocket } from "../../contexts/SocketContext.tsx";
+import { useAppointments } from "../../hooks/useAppointments.ts";
+import { setResetPaymentInfoAndSignature } from "../../redux/appointments/appointmentsSlice.ts";
 
 export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
   const [isOpenReviewModal, setIsOpenReviewModal] = useState<boolean>(false);
@@ -53,6 +60,11 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
     useState<boolean>(false);
   const { favoriteItems } = usePsychologists();
   const { isLoggedIn } = useAuth();
+  const { paymentInfo, paymentSignature } = useAppointments();
+
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const socket = useSocket();
 
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
@@ -97,6 +109,35 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
 
   const messageForNotLoggedInUsers =
     "There are no comments yet. To leave a comment, please log in!";
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("newReview", (review) => {
+        dispatch(setNewReview(review));
+      });
+      return () => {
+        socket.off("newReview");
+      };
+    }
+  }, [dispatch, socket]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("updateAvatarForComment", (newAvatarForComment) => {
+        dispatch(setNewAvatarForComment(newAvatarForComment));
+      });
+      return () => {
+        socket.off("updateAvatarForComment");
+      };
+    }
+  }, [dispatch, socket]);
+
+  useEffect(() => {
+    if (formRef.current && paymentInfo && paymentSignature) {
+      formRef.current.submit();
+      dispatch(setResetPaymentInfoAndSignature());
+    }
+  }, [dispatch, paymentInfo, paymentSignature, formRef]);
 
   return (
     <>
@@ -167,12 +208,10 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
         item.reviews.length > 0 && (
           <ReviewList>
             {item.reviews
-              .map((review) => (
-                <li key={review._id}>
+              .map((review, index) => (
+                <li key={index}>
                   <ReviewerCard>
-                    <ReviewerAvatar>
-                      {review.reviewer.slice(0, 1)}
-                    </ReviewerAvatar>
+                    <ReviewerAvatar src={review.avatar} />
                     <div>
                       <ReviewerDate>
                         {format(new Date(review.date), "dd.MM.yyyy")}
@@ -204,6 +243,7 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
           id={item._id}
           avatar={item.avatar_url}
           name={item.name}
+          price_per_hour={item.price_per_hour}
           isOpenModal={isOpenModalAppointment}
           onToggleModal={toggleAppointmentModal}
         />
@@ -214,6 +254,7 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
           id={item._id}
           avatar={item.avatar_url}
           name={item.name}
+          price_per_hour={item.price_per_hour}
           isOpenModal={isOpenModalAppointment}
           onToggleModal={toggleAppointmentModal}
         />
@@ -226,6 +267,16 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
           onToggleModal={toggleReviewModal}
         />
       )}
+
+      <form
+        ref={formRef}
+        method="POST"
+        action="https://www.liqpay.ua/api/3/checkout"
+        target="_blank"
+      >
+        <input type="hidden" name="data" value={paymentInfo} />
+        <input type="hidden" name="signature" value={paymentSignature} />
+      </form>
     </>
   );
 };

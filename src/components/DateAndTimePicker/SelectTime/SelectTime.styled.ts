@@ -5,7 +5,7 @@ export const SelectTimeStyled = styled.select`
     width: 128px;
   }
   width: 136px;
-  border: 1px solid #e9eae9;
+  border: 1px solid ${({ theme }) => theme.colors.fieldFormColor};
   border-radius: 12px;
   padding-left: 12px;
   padding-right: 6px;

@@ -32,7 +32,7 @@ export const Profession = styled.div`
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
-  color: #8a8a89;
+  color: ${({ theme }) => theme.colors.secondaryColor};
   margin-bottom: 8px;
 `;
 
@@ -54,13 +54,14 @@ export const RatingPriceWrapper = styled.div`
 `;
 
 export const SvgStar = styled.svg<ISvgStarProps>`
-  stroke: #191a15;
-  fill: ${({ $isFilled }) => ($isFilled ? "#ffc531" : "white")};
+  stroke: ${({ theme }) => theme.colors.primaryColor};
+  fill: ${({ $isFilled, theme }) =>
+    $isFilled ? theme.bgColors.ratingBgGolor : theme.bgColors.secondaryBgColor};
   margin-right: 8px;
 `;
 
 export const Delimiter = styled.span`
-  color: #cececd;
+  color: ${({ theme }) => theme.colors.secondaryColor};
   margin-left: 8px;
   margin-right: 8px;
 `;
@@ -72,7 +73,7 @@ export const Rating = styled.span`
   font-weight: 500;
   font-size: 14px;
   line-height: 1.5;
-  color: #191a15;
+  color: ${({ theme }) => theme.colors.primaryColor};
 `;
 
 export const Price = styled.span`
@@ -87,7 +88,7 @@ export const Price = styled.span`
 `;
 
 export const PriceAccent = styled.span`
-  color: #38cd3e;
+  color: ${({ theme }) => theme.colors.accentColor};
 `;
 
 export const ButtonSvg = styled.button`
@@ -102,18 +103,18 @@ interface MySvgHeartProps {
 }
 
 export const SvgHeart = styled.svg<MySvgHeartProps>`
-  fill: ${({ $owner }) => {
+  fill: ${({ $owner, theme }) => {
     if ($owner === undefined || $owner.length === 0) {
       return "none";
     } else {
-      return "#54be96;";
+      return theme.bgColors.accentBgColor;
     }
   }};
-  stroke: ${({ $owner }) => {
+  stroke: ${({ $owner, theme }) => {
     if ($owner === undefined || $owner.length === 0) {
       return "#181914";
     } else {
-      return "#54be96";
+      return theme.colors.primaryColor;
     }
   }};
 `;
@@ -122,7 +123,7 @@ export const Title = styled.div`
   font-weight: 500;
   font-size: 20px;
   line-height: 1;
-  color: #191a15;
+  color: ${({ theme }) => theme.colors.primaryColor};
   margin-bottom: 24px;
 `;
 
@@ -137,7 +138,7 @@ export const List = styled.ul`
 `;
 
 export const ListItem = styled.li`
-  background-color: #f3f3f3;
+  background-color: ${({ theme }) => theme.bgColors.primaryBgColor};
   border-radius: 24px;
   padding: 8px 16px;
   font-weight: 500;
@@ -147,14 +148,14 @@ export const ListItem = styled.li`
 `;
 
 export const ListItemAccent = styled.span`
-  color: #191a15;
+  color: ${({ theme }) => theme.colors.primaryColor};
 `;
 
 export const About = styled.p`
   font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
-  color: #8a8b88;
+  color: ${({ theme }) => theme.colors.secondaryColor};
   margin-bottom: 20px;
 `;
 
@@ -168,7 +169,7 @@ export const ButtonWrapper = styled.div`
 export const ButtonAction = styled.button`
   border-radius: 30px;
   padding: 14px 32px;
-  background-color: #54be96;
+  background-color: ${({ theme }) => theme.bgColors.accentBgColor};
   font-weight: 500;
   font-size: 16px;
   line-height: 1.25;
@@ -179,7 +180,7 @@ export const ButtonAction = styled.button`
   &:hover,
   &:focus {
     transform: scale(1.01);
-    background-color: #36a379;
+    background-color: ${({ theme }) => theme.bgColors.activeAccentBgColor};
   }
 `;
 
@@ -197,18 +198,10 @@ export const ReviewerCard = styled.div`
   margin-bottom: 10px;
 `;
 
-export const ReviewerAvatar = styled.div`
+export const ReviewerAvatar = styled.img`
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background-color: #deeee7;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 1;
-  color: #54be96;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 export const ReviewerDate = styled.div`
@@ -219,7 +212,7 @@ export const ReviewerDate = styled.div`
 export const ReviewerName = styled.div`
   font-weight: 500;
   font-size: 14px;
-  color: #191a15;
+  color: ${({ theme }) => theme.colors.primaryColor};
   margin-bottom: 4px;
 `;
 
@@ -227,9 +220,9 @@ export const ReviewerComment = styled.p`
   font-weight: 400;
   font-size: 14px;
   line-height: 1.25;
-  color: #8a8b88;
+  color: ${({ theme }) => theme.colors.secondaryColor};
 `;
 
 export const NotFoundMessage = styled.div`
-  color: #8a8b88;
+  color: ${({ theme }) => theme.colors.secondaryColor};
 `;

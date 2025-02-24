@@ -9,9 +9,10 @@ import {
 import { RootState } from "./store";
 import { IReview } from "../interfaces/reviewsInterface";
 import {
-  IaddReservedTimesForDay,
+  IAddReservedTimesForDay,
   IAppointment,
   IAppointmentForLoggedInUser,
+  ICreatePayment,
   IgetAppointmentForNotLoggedInUser,
   IGetReservedTimesForDay,
 } from "../interfaces/appointmentsInterface";
@@ -60,7 +61,6 @@ export const updateAvatar = createAsyncThunk(
   async (data: FormData, thunkApi) => {
     try {
       const response = await axios.put("/api/auth/avatar", data);
-      console.log(response.data);
       return response.data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
@@ -239,6 +239,30 @@ export const addAppointmentForLoggedInUser = createAsyncThunk(
   }
 );
 
+export const getAppointmentsForLoggedInUser = createAsyncThunk(
+  "appointment/getAppointmentsForLoggedInUser",
+  async (_, thunkApi) => {
+    try {
+      const response = await axios.get("/api/loggedin/appointments");
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getAppointmentForLoggedInUser = createAsyncThunk(
+  "appointment/getAppointmentForLoggedInUser",
+  async (id: string, thunkApi) => {
+    try {
+      const response = await axios.get(`/api/loggedin/appointments/${id}/one`);
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const appointmentIsComplete = createAsyncThunk(
   "appointment/appointmentIsComplete",
   async ({ clientId }: IgetAppointmentForNotLoggedInUser, thunkApi) => {
@@ -269,9 +293,21 @@ export const getReservedTimesForDay = createAsyncThunk(
 
 export const addReservedTimesForDay = createAsyncThunk(
   "appointment/addReservedTimesForDay",
-  async (data: IaddReservedTimesForDay, thunkApi) => {
+  async (data: IAddReservedTimesForDay, thunkApi) => {
     try {
       await axios.post(`/api/reserved-times`, data);
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const createPayment = createAsyncThunk(
+  "appointment/createPayment",
+  async (data: ICreatePayment, thunkApi) => {
+    try {
+      const response = await axios.post("/api/create-payment", data);
+      return response.data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
     }

@@ -13,6 +13,7 @@ export interface IModalAppointmentProps extends IModalAuthProps {
   id: string;
   avatar: string;
   name: string;
+  price_per_hour: number;
 }
 
 export interface IAvatarUpload {

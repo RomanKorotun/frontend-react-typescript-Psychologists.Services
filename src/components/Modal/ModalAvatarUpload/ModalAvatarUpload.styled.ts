@@ -41,7 +41,6 @@ export const FormAvatarUpload = styled(Form)`
 
 export const Avatar = styled.img`
   align-self: center;
-  /* border-radius: 16px; */
   border-radius: 50px;
   width: 86px;
   height: 86px;
@@ -89,6 +88,12 @@ export const ButtonSubmit = styled.button`
   letter-spacing: -0.01em;
   color: #fbfbfb;
   border-radius: 30px;
-  background-color: #54be96;
+  background-color: ${({ theme }) => theme.bgColors.accentBgColor};
   border: none;
+  transition: transform 250ms, background-color 250ms;
+  &:hover,
+  &:focus {
+    transform: scale(1.01);
+    background-color: ${({ theme }) => theme.bgColors.activeAccentBgColor};
+  }
 `;

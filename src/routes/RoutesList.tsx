@@ -10,6 +10,8 @@ const PsychologistsFavoritePage = lazy(
   () => import("../page/PsychologistsFavoritePage")
 );
 const NotFoundPage = lazy(() => import("../page/NotFoundPage"));
+const AppointmentsPage = lazy(() => import("../page/AppointmentsPage"));
+const AppointmentPage = lazy(() => import("../page/AppointmentPage"));
 
 export const RoutesList: FC = () => {
   return (
@@ -24,6 +26,24 @@ export const RoutesList: FC = () => {
             <PrivateRoute
               redirectTo="/psychologists"
               page={<PsychologistsFavoritePage />}
+            />
+          }
+        />
+        <Route
+          path="appointments"
+          element={
+            <PrivateRoute
+              redirectTo="/psychologists"
+              page={<AppointmentsPage />}
+            />
+          }
+        />
+        <Route
+          path="appointments/:id"
+          element={
+            <PrivateRoute
+              redirectTo="/psychologists"
+              page={<AppointmentPage />}
             />
           }
         />

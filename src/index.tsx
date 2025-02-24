@@ -7,17 +7,22 @@ import reportWebVitals from "./reportWebVitals";
 import { GlobalStyled } from "./GlobaStyles";
 import { persistor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./theme";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter basename="/frontend-react-typescript-Psychologists.Services">
-          <App />
-          <GlobalStyled />
+          <ThemeProvider theme={theme}>
+            <App />
+            <GlobalStyled />
+          </ThemeProvider>
         </BrowserRouter>
       </PersistGate>
     </Provider>

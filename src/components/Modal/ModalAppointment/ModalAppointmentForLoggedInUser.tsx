@@ -31,6 +31,7 @@ import { CloseModalButton } from "../../CloseModalButton/CloseModalButton";
 import {
   addAppointmentForLoggedInUser,
   appointmentIsComplete,
+  createPayment,
 } from "../../../redux/api";
 import { setClientId } from "../../../redux/appointments/appointmentsSlice";
 import { useAppointments } from "../../../hooks/useAppointments";
@@ -42,6 +43,7 @@ export const ModalAppointmentForLoggedInUser: FC<IModalAppointmentProps> = ({
   avatar,
   name,
   isOpenModal,
+  price_per_hour,
   onToggleModal,
 }) => {
   const { clientId } = useAppointments();
@@ -49,6 +51,15 @@ export const ModalAppointmentForLoggedInUser: FC<IModalAppointmentProps> = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = (values: IAppointmentForLoggedInUser) => {
+    clientId &&
+      dispatch(
+        createPayment({
+          amount: price_per_hour,
+          currency: "USD",
+          description: "Test payment",
+          orderId: clientId,
+        })
+      );
     clientId &&
       values.date &&
       dispatch(

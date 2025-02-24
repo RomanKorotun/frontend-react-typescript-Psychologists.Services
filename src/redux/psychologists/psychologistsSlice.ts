@@ -7,7 +7,6 @@ import {
   updatePsychologistsCardFavoriteLoggedIn,
   getOnePsychologistForNotLoggedInUser,
   getOnePsychologistForLoggedInUser,
-  addReviewForLoggedInUser,
 } from "../api";
 
 import {
@@ -16,6 +15,8 @@ import {
   IFilter,
   IResponsePsychologists,
   IResponsePsychologistsItem,
+  IResponseAddNewReview,
+  IResponseNewAvatarForComment,
 } from "../../interfaces/psychologistsInterfaces";
 
 const initialState: IPsychologistsState = {
@@ -30,6 +31,16 @@ const initialState: IPsychologistsState = {
   pagesFavoriteQuantity: 1,
   loading: false,
   error: false,
+};
+
+const pendingAction = (state: IPsychologistsState) => {
+  state.error = false;
+  state.loading = true;
+};
+
+const rejectedAction = (state: IPsychologistsState) => {
+  state.error = true;
+  state.loading = false;
 };
 
 const psychologistsSlice = createSlice({
@@ -58,25 +69,53 @@ const psychologistsSlice = createSlice({
     setFilter: (state, action: PayloadAction<IFilter>) => {
       state.filter = action.payload.filter;
     },
-    setNewReview: (
-      state,
-      action: PayloadAction<IResponsePsychologistsItem>
-    ) => {
-      state.oneItem = action.payload;
+    setNewReview: (state, action: PayloadAction<IResponseAddNewReview>) => {
+      state.oneItem = state.oneItem
+        ? {
+            ...state.oneItem,
+            rating: action.payload.rating,
+            reviews: state.oneItem.reviews
+              ? [...state.oneItem.reviews, ...action.payload.reviews]
+              : state.oneItem.reviews,
+          }
+        : state.oneItem;
+
       state.items = state.items.map((el) => {
         if (el._id === action.payload._id) {
-          return action.payload;
+          return { ...el, rating: action.payload.rating };
         }
         return el;
       });
     },
+    setNewAvatarForComment: (
+      state,
+      action: PayloadAction<IResponseNewAvatarForComment>
+    ) => {
+      const { psychologistsIds, userId, newAvatar } = action.payload;
+      if (state.oneItem?._id && psychologistsIds.includes(state.oneItem._id)) {
+        const updatedReviews = state.oneItem.reviews?.map((review) => {
+          if (review.clientId === userId) {
+            return {
+              ...review,
+              avatar: newAvatar,
+            };
+          }
+          return review;
+        });
+        return {
+          ...state,
+          oneItem: {
+            ...state.oneItem,
+            reviews: updatedReviews,
+          },
+        };
+      }
+      return state;
+    },
   },
   extraReducers: (build) =>
     build
-      .addCase(psychologistsFotNotLoggedInUser.pending, (state) => {
-        state.error = false;
-        state.loading = true;
-      })
+      .addCase(psychologistsFotNotLoggedInUser.pending, pendingAction)
       .addCase(
         psychologistsFotNotLoggedInUser.fulfilled,
         (state, action: PayloadAction<IResponsePsychologists>) => {
@@ -85,14 +124,8 @@ const psychologistsSlice = createSlice({
           state.items = action.payload.items;
         }
       )
-      .addCase(psychologistsFotNotLoggedInUser.rejected, (state) => {
-        state.loading = false;
-        state.error = true;
-      })
-      .addCase(psychologistsForLoggedInUser.pending, (state) => {
-        state.error = false;
-        state.loading = true;
-      })
+      .addCase(psychologistsFotNotLoggedInUser.rejected, rejectedAction)
+      .addCase(psychologistsForLoggedInUser.pending, pendingAction)
       .addCase(
         psychologistsForLoggedInUser.fulfilled,
         (state, action: PayloadAction<IResponsePsychologists>) => {
@@ -101,10 +134,7 @@ const psychologistsSlice = createSlice({
           state.pagesQuantity = action.payload.pagesQuintity;
         }
       )
-      .addCase(psychologistsForLoggedInUser.rejected, (state) => {
-        state.loading = false;
-        state.error = true;
-      })
+      .addCase(psychologistsForLoggedInUser.rejected, rejectedAction)
       .addCase(
         updatePsychologistsCardLoggedIn.fulfilled,
         (state, action: PayloadAction<IResponsePsychologistsItem>) => {
@@ -117,10 +147,7 @@ const psychologistsSlice = createSlice({
           });
         }
       )
-      .addCase(psychologistsFavorite.pending, (state) => {
-        state.error = false;
-        state.loading = true;
-      })
+      .addCase(psychologistsFavorite.pending, pendingAction)
       .addCase(
         psychologistsFavorite.fulfilled,
         (state, action: PayloadAction<IResponsePsychologists>) => {
@@ -129,10 +156,7 @@ const psychologistsSlice = createSlice({
           state.favoriteItems = action.payload.items;
         }
       )
-      .addCase(psychologistsFavorite.rejected, (state) => {
-        state.loading = false;
-        state.error = true;
-      })
+      .addCase(psychologistsFavorite.rejected, rejectedAction)
       .addCase(
         updatePsychologistsCardFavoriteLoggedIn.fulfilled,
         (state, action: PayloadAction<IResponsePsychologistsItem>) => {
@@ -141,10 +165,7 @@ const psychologistsSlice = createSlice({
           );
         }
       )
-      .addCase(getOnePsychologistForNotLoggedInUser.pending, (state) => {
-        state.error = false;
-        state.loading = true;
-      })
+      .addCase(getOnePsychologistForNotLoggedInUser.pending, pendingAction)
       .addCase(
         getOnePsychologistForNotLoggedInUser.fulfilled,
         (state, action: PayloadAction<IResponsePsychologistsItem>) => {
@@ -152,14 +173,8 @@ const psychologistsSlice = createSlice({
           state.oneItem = action.payload;
         }
       )
-      .addCase(getOnePsychologistForNotLoggedInUser.rejected, (state) => {
-        state.loading = false;
-        state.error = true;
-      })
-      .addCase(getOnePsychologistForLoggedInUser.pending, (state) => {
-        state.error = false;
-        state.loading = true;
-      })
+      .addCase(getOnePsychologistForNotLoggedInUser.rejected, rejectedAction)
+      .addCase(getOnePsychologistForLoggedInUser.pending, pendingAction)
       .addCase(
         getOnePsychologistForLoggedInUser.fulfilled,
         (state, action: PayloadAction<IResponsePsychologistsItem>) => {
@@ -167,22 +182,7 @@ const psychologistsSlice = createSlice({
           state.oneItem = action.payload;
         }
       )
-      .addCase(getOnePsychologistForLoggedInUser.rejected, (state) => {
-        state.loading = false;
-        state.error = true;
-      }),
-  // .addCase(
-  //   addReviewForLoggedInUser.fulfilled,
-  //   (state, action: PayloadAction<IResponsePsychologistsItem>) => {
-  //     state.oneItem = action.payload;
-  //     state.items = state.items.map((el) => {
-  //       if (el._id === action.payload._id) {
-  //         return action.payload;
-  //       }
-  //       return el;
-  //     });
-  //   }
-  // ),
+      .addCase(getOnePsychologistForLoggedInUser.rejected, rejectedAction),
 });
 
 export const psychologistsReducer = psychologistsSlice.reducer;
@@ -194,4 +194,5 @@ export const {
   resetPsychologistsFavoriteState,
   setClearFavoriteItem,
   setNewReview,
+  setNewAvatarForComment,
 } = psychologistsSlice.actions;

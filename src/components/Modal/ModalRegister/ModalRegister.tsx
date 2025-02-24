@@ -8,6 +8,7 @@ import {
   CustomModalRegister,
   DescriptionRegisterForm,
   ErrMsg,
+  Error,
   FieldStyled,
   FormRegister,
   LabelStyled,
@@ -19,6 +20,8 @@ import { IModalProps, IUserRegister } from "../../../interfaces/authInterfaces";
 import { resetPsychologistsState } from "../../../redux/psychologists/psychologistsSlice";
 import { RegisterSchema } from "../../../validationShemas/authShemas";
 import { CloseModalButton } from "../../CloseModalButton/CloseModalButton";
+import { useAuth } from "../../../hooks/useAuth";
+import { Loader } from "../../Loader/Loader";
 
 Modal.setAppElement("#root");
 
@@ -26,6 +29,7 @@ export const ModalRegister: FC<IModalProps> = ({
   isOpenModal,
   onToggleModal,
 }) => {
+  const { error, email, loading } = useAuth();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -33,8 +37,11 @@ export const ModalRegister: FC<IModalProps> = ({
     dispatch(signup(values));
     dispatch(resetPsychologistsState());
     navigate("/psychologists");
-    onToggleModal();
   };
+
+  if (email) {
+    onToggleModal();
+  }
 
   const modalStyles = {
     overlay: {
@@ -62,6 +69,7 @@ export const ModalRegister: FC<IModalProps> = ({
         onSubmit={handleSubmit}
       >
         <>
+          {loading && <Loader />}
           <TitleRegisterForm>Registration</TitleRegisterForm>
           <DescriptionRegisterForm>
             Thank you for your interest in our platform! In order to register,
@@ -87,6 +95,7 @@ export const ModalRegister: FC<IModalProps> = ({
             </LabelStyled>
 
             <ButtonSubmit type="submit">Sign Up</ButtonSubmit>
+            {error && <Error>Email in use!</Error>}
           </FormRegister>
         </>
       </Formik>

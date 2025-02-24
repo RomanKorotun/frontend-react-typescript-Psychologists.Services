@@ -15,7 +15,6 @@ export const AppointmentShema = Yup.object().shape({
   client_email: Yup.string()
     .matches(emailRegexp, "Invalid email")
     .required("Required"),
-  // comment: Yup.string(),
   date: Yup.date().required("Required"),
   time: Yup.string().required("Required"),
 });

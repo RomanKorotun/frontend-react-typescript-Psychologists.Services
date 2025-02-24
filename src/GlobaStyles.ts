@@ -41,7 +41,7 @@ export const Container = styled.div`
 
 export const Section = styled.section`
   min-height: 101vh;
-  background-color: #f3f3f3;
+  background-color: ${({ theme }) => theme.bgColors.primaryBgColor};
   z-index: 1;
   padding-top: 220px;
   @media screen and (min-width: 850px) {

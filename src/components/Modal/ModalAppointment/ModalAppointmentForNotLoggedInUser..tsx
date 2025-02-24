@@ -31,6 +31,7 @@ import { CloseModalButton } from "../../CloseModalButton/CloseModalButton";
 import {
   addAppointmentForNotLoggedInUser,
   appointmentIsComplete,
+  createPayment,
 } from "../../../redux/api";
 import { setClientId } from "../../../redux/appointments/appointmentsSlice";
 import { useAppointments } from "../../../hooks/useAppointments";
@@ -42,6 +43,7 @@ export const ModalAppointmentForNotLoggedInUser: FC<IModalAppointmentProps> = ({
   avatar,
   name,
   isOpenModal,
+  price_per_hour,
   onToggleModal,
 }) => {
   const { clientId } = useAppointments();
@@ -50,11 +52,19 @@ export const ModalAppointmentForNotLoggedInUser: FC<IModalAppointmentProps> = ({
 
   const handleSubmit = (values: IAppointment) => {
     clientId &&
+      dispatch(
+        createPayment({
+          amount: price_per_hour,
+          currency: "USD",
+          description: "Test payment",
+          orderId: clientId,
+        })
+      );
+    clientId &&
       values.date &&
       dispatch(
         addAppointmentForNotLoggedInUser({
           ...values,
-          // date: new Date(format(values.date, "yyyy-MM-dd")),
           date: format(values.date, "yyyy-MM-dd"),
           clientId,
         })
@@ -133,15 +143,6 @@ export const ModalAppointmentForNotLoggedInUser: FC<IModalAppointmentProps> = ({
                 />
                 <ErrMsg component="div" name="client_email" />
               </WrapperField>
-
-              {/* <WrapperField>
-                <TextAreaStyled
-                  name="comment"
-                  placeholder="Comment"
-                  component={TextArea}
-                />
-                <ErrMsg component="div" name="comment" />
-              </WrapperField> */}
 
               <WrapperDateAndTime>
                 <WrapperDateField>

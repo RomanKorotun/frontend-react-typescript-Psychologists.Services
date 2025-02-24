@@ -9,7 +9,6 @@ import {
   resetPsychologistsFavoriteState,
   setClearFavoriteItem,
   setFilter,
-  setNewReview,
   setPageFavorite,
 } from "../redux/psychologists/psychologistsSlice";
 import { Loader } from "../components/Loader/Loader";
@@ -17,7 +16,7 @@ import { PaginationButtons } from "../components/Pagination/Pagination";
 import { Filters } from "../components/Filters/Filters";
 import { useFilters } from "../hooks/useFilters";
 import { useQueryParams } from "../hooks/useQueryParams";
-import { useSocket } from "../hooks/useSocket";
+import { LinkFavorite, MessageInfo } from "../components/MessageInfo";
 
 const PsychologistsFavoritePage: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -29,7 +28,6 @@ const PsychologistsFavoritePage: FC = () => {
     clearFavoriteItem,
   } = usePsychologists();
   const { standard, name, price, popular } = useFilters();
-  const socket = useSocket();
 
   const isFirstRender = useRef(true);
 
@@ -85,22 +83,18 @@ const PsychologistsFavoritePage: FC = () => {
     };
   }, [dispatch]);
 
-  useEffect(() => {
-    if (socket) {
-      socket.on("newReview", (review) => {
-        dispatch(setNewReview(review));
-      });
-      return () => {
-        socket.off("newReview");
-      };
-    }
-  }, [dispatch, socket]);
-
   return (
     <Section>
       <Container>
-        <Filters />
         {loading && <Loader />}
+        {favoriteItems.length === 0 && !loading && (
+          <MessageInfo>
+            Please go to the&nbsp;
+            <LinkFavorite to="/psychologists">psychologists page</LinkFavorite>
+            &nbsp; to add a psychologist to the selected category.
+          </MessageInfo>
+        )}
+        {favoriteItems.length > 0 && <Filters />}
         {favoriteItems.length > 0 && <PsychologistList items={favoriteItems} />}
         {favoriteItems.length > 0 && <PaginationButtons />}
       </Container>

@@ -12,8 +12,6 @@ import { PsychologistListCard } from "../components/PsychologistListCard/Psychol
 import styled from "styled-components";
 import { Loader } from "../components/Loader/Loader";
 import { useAuth } from "../hooks/useAuth";
-import { useSocket } from "../hooks/useSocket";
-import { setNewReview } from "../redux/psychologists/psychologistsSlice";
 
 const Wrapper = styled.div`
   @media screen and (max-width: 350px) {
@@ -38,7 +36,6 @@ const Wrapper = styled.div`
 
 const PsychologistPage: FC = () => {
   const { isLoggedIn } = useAuth();
-  const socket = useSocket();
   const { oneItem, loading } = usePsychologists();
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
@@ -49,17 +46,6 @@ const PsychologistPage: FC = () => {
       isLoggedIn && dispatch(getOnePsychologistForLoggedInUser({ id }));
     }
   }, [dispatch, id, isLoggedIn]);
-
-  useEffect(() => {
-    if (socket) {
-      socket.on("newReview", (review) => {
-        dispatch(setNewReview(review));
-      });
-      return () => {
-        socket.off("newReview");
-      };
-    }
-  }, [dispatch, socket]);
 
   return (
     <Section>
