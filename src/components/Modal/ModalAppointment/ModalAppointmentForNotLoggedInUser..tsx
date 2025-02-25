@@ -165,6 +165,16 @@ export const ModalAppointmentForNotLoggedInUser: FC<IModalAppointmentProps> = ({
               </WrapperDateAndTime>
 
               <ButtonSubmit type="submit">Send</ButtonSubmit>
+
+              <div style={{ fontSize: "10px", marginTop: "5px", color: "red" }}>
+                Картка для тестової оплати - 4242424242424242
+              </div>
+              <div style={{ fontSize: "10px", color: "red" }}>
+                Термін дії - будь-яка дата
+              </div>
+              <div style={{ fontSize: "10px", color: "red" }}>
+                CVV2 - будь-які цифри
+              </div>
             </FormAppointment>
           </>
         )}
