@@ -271,7 +271,7 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
       <form
         ref={formRef}
         method="POST"
-        action="https://www.liqpay.ua/api/3/checkout"
+        action={`https://www.liqpay.ua/api/3/checkout?data=${paymentInfo}&signature=${paymentSignature}`}
         target="_blank"
       >
         <input type="hidden" name="data" value={paymentInfo} />

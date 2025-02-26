@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Modal from "react-modal";
+import { MdAdd } from "react-icons/md";
 import { Form } from "formik";
 
 export const CustomModalAppointment = styled(Modal)`
@@ -52,21 +53,20 @@ export const Input = styled.input`
 
 export const AddButton = styled.button`
   position: absolute;
-  top: 86px;
+  top: 80px;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 0;
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export const AddIcon = styled.svg`
-  width: 24px;
-  height: 24px;
-  stroke: #191a15;
+export const AddIcon = styled(MdAdd)`
+  width: 100%;
+  height: 100%;
 `;
 
 export const ErrMsg = styled.div`

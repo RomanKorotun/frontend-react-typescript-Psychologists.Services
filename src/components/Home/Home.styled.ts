@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { GoArrowUpRight } from "react-icons/go";
 
 export const HomeCard = styled.div`
   display: flex;
@@ -119,8 +120,31 @@ export const LinkHomeStyled = styled(Link)`
   }
 `;
 
-export const LinkTitleHome = styled.span`
-  margin-right: 18px;
+export const LinkContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+`;
+
+export const ArrowUpRight = styled(GoArrowUpRight)`
+  color: " #fbfbfb";
+  @media only screen and (max-width: 599px) {
+    width: 17px;
+    height: 17px;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 17px;
+    height: 17px;
+  }
+  @media only screen and (min-width: 700px) {
+    width: 19px;
+    height: 19px;
+  }
+  @media only screen and (min-width: 800px) {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 export const PictureStyled = styled.div`

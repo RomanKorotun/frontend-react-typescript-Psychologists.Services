@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { IoCloseSharp } from "react-icons/io5";
 
 export const ButtonCloseModal = styled.button`
   @media only screen and (max-width: 427px) {
@@ -16,4 +17,9 @@ export const ButtonCloseModal = styled.button`
   position: absolute;
   top: 16px;
   right: 16px;
+`;
+
+export const CloseIcon = styled(IoCloseSharp)`
+  width: 32px;
+  height: 32px;
 `;

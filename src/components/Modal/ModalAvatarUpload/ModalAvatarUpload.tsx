@@ -2,7 +2,6 @@ import { ChangeEvent, FC, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import Modal from "react-modal";
 import { Formik } from "formik";
-import sprite from "../../../images/icons.svg";
 import {
   ButtonSubmit,
   CustomModalAppointment,
@@ -110,9 +109,7 @@ export const ModalAvatarUpload: FC<IModalAvatarUploadProps> = ({
                   onChange={(event) => handleFileChange(event, setFieldValue)}
                 />
                 <AddButton onClick={handleClickAdd} type="button">
-                  <AddIcon>
-                    <use href={`${sprite}#add-icon`} />
-                  </AddIcon>
+                  <AddIcon />
                 </AddButton>
                 {errors.avatar && <ErrMsg>{errors.avatar}</ErrMsg>}
               </div>
