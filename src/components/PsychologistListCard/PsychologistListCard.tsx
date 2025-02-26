@@ -267,12 +267,10 @@ export const PsychologistListCard: FC<IItemProps> = ({ item }) => {
           onToggleModal={toggleReviewModal}
         />
       )}
-
       <form
         ref={formRef}
         method="POST"
-        action={`https://www.liqpay.ua/api/3/checkout?data=${paymentInfo}&signature=${paymentSignature}`}
-        target="_blank"
+        action="https://www.liqpay.ua/api/3/checkout"
       >
         <input type="hidden" name="data" value={paymentInfo} />
         <input type="hidden" name="signature" value={paymentSignature} />
