@@ -2,7 +2,7 @@ import { FC } from "react";
 import {
   HomeCard,
   ImageStyled,
-  LinkHomeStyled,
+  LinkHome,
   SubTitle,
   Title,
   TitleAccent,
@@ -27,12 +27,12 @@ export const Home: FC = () => {
           We help you to reveal your potential, overcome challenges and find a
           guide in your own life with the help of our experienced psychologists.
         </SubTitle>
-        <LinkHomeStyled to="/psychologists">
+        <LinkHome to="/psychologists">
           <LinkContent>
             <span>Get started</span>
             <ArrowUpRight />
           </LinkContent>
-        </LinkHomeStyled>
+        </LinkHome>
       </TitleCard>
       <PictureStyled>
         <source

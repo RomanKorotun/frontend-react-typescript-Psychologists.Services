@@ -72,7 +72,7 @@ export const SubTitle = styled.p`
   }
 `;
 
-export const LinkHomeStyled = styled(Link)`
+export const LinkHome = styled(Link)`
   display: inline-block;
   background-color: ${({ theme }) => theme.bgColors.accentBgColor};
   border-radius: 30px;
@@ -87,22 +87,34 @@ export const LinkHomeStyled = styled(Link)`
     background-color: ${({ theme }) => theme.bgColors.activeAccentBgColor};
   }
 
-  @media only screen and (max-width: 599px) {
+  @media only screen and (max-width: 382px) {
     display: block;
     max-width: 260px;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 14px;
-    padding-bottom: 14px;
-    font-size: 14px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 13px;
   }
+
+  @media only screen and (min-width: 383px) and (max-width: 599px) {
+    display: block;
+    max-width: 260px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 16px;
+  }
+
   @media only screen and (min-width: 600px) {
-    padding-top: 14px;
+    padding-top: 16px;
     padding-right: 30px;
-    padding-bottom: 14px;
+    padding-bottom: 16px;
     padding-left: 30px;
-    font-size: 14px;
+    font-size: 16x;
   }
   @media only screen and (min-width: 700px) {
     padding-top: 16px;
