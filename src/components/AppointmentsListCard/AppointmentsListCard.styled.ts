@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const DateDisplay = styled.div`
-  /* background-color: ${({ theme }) => theme.bgColors.primaryBgColor}; */
   border: 1px solid ${({ theme }) => theme.colors.accentColor};
   border-radius: 20px;
   padding: 15px;
@@ -9,7 +8,6 @@ export const DateDisplay = styled.div`
 `;
 
 export const Time = styled.div`
-  /* background-color: ${({ theme }) => theme.bgColors.primaryBgColor}; */
   border: 1px solid ${({ theme }) => theme.colors.accentColor};
   border-radius: 20px;
   padding: 15px;
@@ -17,7 +15,6 @@ export const Time = styled.div`
 `;
 
 export const Price = styled.div`
-  /* background-color: ${({ theme }) => theme.bgColors.primaryBgColor}; */
   border: 1px solid ${({ theme }) => theme.colors.accentColor};
   border-radius: 20px;
   padding: 15px;
@@ -25,7 +22,6 @@ export const Price = styled.div`
 `;
 
 export const Name = styled.div`
-  /* background-color: ${({ theme }) => theme.bgColors.primaryBgColor}; */
   border: 1px solid ${({ theme }) => theme.colors.accentColor};
   border-radius: 20px;
   padding: 15px;
@@ -43,7 +39,6 @@ export const Image = styled.img`
 `;
 
 export const Status = styled.div`
-  /* background-color: ${({ theme }) => theme.bgColors.primaryBgColor}; */
   border: 1px solid ${({ theme }) => theme.colors.accentColor};
   border-radius: 20px;
   padding: 15px;
