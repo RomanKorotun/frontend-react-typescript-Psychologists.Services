@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/frontend-react-typescript-Psychologists.Services/static/css/main.817beb6f.css",
-    "main.js": "/frontend-react-typescript-Psychologists.Services/static/js/main.142df080.js",
+    "main.js": "/frontend-react-typescript-Psychologists.Services/static/js/main.992b8755.js",
     "static/js/582.d6415c1d.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/582.d6415c1d.chunk.js",
     "static/js/388.a51d7071.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/388.a51d7071.chunk.js",
     "static/js/593.e53ddfb5.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/593.e53ddfb5.chunk.js",
     "static/js/411.954ae024.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/411.954ae024.chunk.js",
     "static/js/646.bb586d3d.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/646.bb586d3d.chunk.js",
-    "static/js/313.8a053cb3.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/313.8a053cb3.chunk.js",
+    "static/js/313.c5757546.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/313.c5757546.chunk.js",
     "static/js/118.749d3517.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/118.749d3517.chunk.js",
     "static/js/453.68693753.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/453.68693753.chunk.js",
     "static/js/420.3f390733.chunk.js": "/frontend-react-typescript-Psychologists.Services/static/js/420.3f390733.chunk.js",
@@ -21,13 +21,13 @@
     "static/media/icons.svg": "/frontend-react-typescript-Psychologists.Services/static/media/icons.11db7b3d873b3d81b34a58236b79dd36.svg",
     "index.html": "/frontend-react-typescript-Psychologists.Services/index.html",
     "main.817beb6f.css.map": "/frontend-react-typescript-Psychologists.Services/static/css/main.817beb6f.css.map",
-    "main.142df080.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/main.142df080.js.map",
+    "main.992b8755.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/main.992b8755.js.map",
     "582.d6415c1d.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/582.d6415c1d.chunk.js.map",
     "388.a51d7071.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/388.a51d7071.chunk.js.map",
     "593.e53ddfb5.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/593.e53ddfb5.chunk.js.map",
     "411.954ae024.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/411.954ae024.chunk.js.map",
     "646.bb586d3d.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/646.bb586d3d.chunk.js.map",
-    "313.8a053cb3.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/313.8a053cb3.chunk.js.map",
+    "313.c5757546.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/313.c5757546.chunk.js.map",
     "118.749d3517.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/118.749d3517.chunk.js.map",
     "453.68693753.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/453.68693753.chunk.js.map",
     "420.3f390733.chunk.js.map": "/frontend-react-typescript-Psychologists.Services/static/js/420.3f390733.chunk.js.map",
@@ -37,6 +37,6 @@
   },
   "entrypoints": [
     "static/css/main.817beb6f.css",
-    "static/js/main.142df080.js"
+    "static/js/main.992b8755.js"
   ]
 }
