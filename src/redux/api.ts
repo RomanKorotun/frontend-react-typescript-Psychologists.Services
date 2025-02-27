@@ -17,9 +17,9 @@ import {
   IGetReservedTimesForDay,
 } from "../interfaces/appointmentsInterface";
 
-const { REACT_APP_BASE_URL } = process.env;
+const { REACT_APP_BASE_URL_BACKEND } = process.env;
 
-axios.defaults.baseURL = REACT_APP_BASE_URL;
+axios.defaults.baseURL = REACT_APP_BASE_URL_BACKEND;
 
 const setAuthToken = (token: string) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;

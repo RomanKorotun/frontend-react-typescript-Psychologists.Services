@@ -12,7 +12,7 @@ interface SocketProviderProps {
   children: ReactNode;
 }
 
-const { REACT_APP_BASE_URL } = process.env;
+const { REACT_APP_BASE_URL_BACKEND } = process.env;
 
 export const SocketContext = createContext<Socket | null>(null);
 
@@ -20,7 +20,7 @@ export const SocketProvider: FC<SocketProviderProps> = ({ children }) => {
   const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
-    socketRef.current = io(REACT_APP_BASE_URL);
+    socketRef.current = io(REACT_APP_BASE_URL_BACKEND);
     return () => {
       socketRef.current?.disconnect();
     };
