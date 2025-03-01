@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { Item, List, LogoutBtn } from "./PersonalMenu.styled";
+import { ChangeAvatarBtn, Item, List, LogoutBtn } from "./PersonalMenu.styled";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
@@ -11,11 +11,12 @@ import {
 } from "../../redux/psychologists/psychologistsSlice";
 
 interface IPersonalMenuProps {
-  onToggleVisibleMenu(): void;
+  onToggleVisiblePersonalMenu(): void;
+  onToggleAvatarUploadModal(): void;
 }
 
 export const PersonalMenu = forwardRef<HTMLUListElement, IPersonalMenuProps>(
-  ({ onToggleVisibleMenu }, ref) => {
+  ({ onToggleVisiblePersonalMenu, onToggleAvatarUploadModal }, ref) => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
@@ -24,15 +25,25 @@ export const PersonalMenu = forwardRef<HTMLUListElement, IPersonalMenuProps>(
       dispatch(setFilter({ filter: "Default" }));
       dispatch(resetPsychologistsState());
       dispatch(resetPsychologistsFavoriteState());
-      // navigate("/psychologists");
       navigate("/");
     };
 
     return (
       <List ref={ref}>
-        <Item onClick={onToggleVisibleMenu} to="/appointments">
+        <Item onClick={onToggleVisiblePersonalMenu} to="/favorite">
+          Favorites
+        </Item>
+        <Item onClick={onToggleVisiblePersonalMenu} to="/appointments">
           Appointments
         </Item>
+        <ChangeAvatarBtn
+          onClick={() => {
+            onToggleAvatarUploadModal();
+            onToggleVisiblePersonalMenu();
+          }}
+        >
+          Change avatar
+        </ChangeAvatarBtn>
         <LogoutBtn onClick={handleLogout}>Logout</LogoutBtn>
       </List>
     );

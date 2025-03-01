@@ -43,9 +43,9 @@ export const Section = styled.section`
   min-height: 101vh;
   background-color: ${({ theme }) => theme.bgColors.primaryBgColor};
   z-index: 1;
-  padding-top: 220px;
-  @media screen and (min-width: 850px) {
-    padding-top: 150px;
+  padding-top: 26px;
+  @media screen and (min-width: 740px) {
+    padding-top: 115px;
   }
   padding-bottom: 50px;
 `;

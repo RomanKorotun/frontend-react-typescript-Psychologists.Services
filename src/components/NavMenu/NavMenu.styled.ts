@@ -1,10 +1,7 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
-export const NavStyled = styled.nav`
-  @media only screen and (max-width: 849px) {
-    gap: 30px;
-  }
+export const Nav = styled.nav`
   display: flex;
   gap: 16px;
   font-weight: 400;
@@ -14,7 +11,11 @@ export const NavStyled = styled.nav`
   color: ${({ theme }) => theme.colors.primaryColor};
 `;
 
-export const LinkNavStyled = styled(NavLink)`
+export const LinkNav = styled(NavLink)`
+  @media screen and (max-width: 769px) {
+    font-size: 14px;
+  }
+
   position: relative;
   color: currentColor;
   &::after {

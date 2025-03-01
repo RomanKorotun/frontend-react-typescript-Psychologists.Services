@@ -1,14 +1,14 @@
 import { FC } from "react";
-import { NavStyled, LinkNavStyled } from "./NavMenu.styled";
-import { useAuth } from "../../hooks/useAuth";
+import { Nav, LinkNav } from "./NavMenu.styled";
+// import { useAuth } from "../../hooks/useAuth";
 
 export const NavMenu: FC = () => {
-  const { isLoggedIn } = useAuth();
+  // const { isLoggedIn } = useAuth();
   return (
-    <NavStyled>
-      <LinkNavStyled to="/">Home</LinkNavStyled>
-      <LinkNavStyled to="/psychologists">Psychologists</LinkNavStyled>
-      {isLoggedIn && <LinkNavStyled to="/favorite">Favorite</LinkNavStyled>}
-    </NavStyled>
+    <Nav>
+      <LinkNav to="/">Home</LinkNav>
+      <LinkNav to="/psychologists">Psychologists</LinkNav>
+      {/* {isLoggedIn && <LinkNav to="/favorite">Favorite</LinkNav>} */}
+    </Nav>
   );
 };

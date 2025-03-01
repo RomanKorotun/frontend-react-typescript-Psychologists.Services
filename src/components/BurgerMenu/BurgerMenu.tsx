@@ -8,10 +8,10 @@ interface IBurgerMenuProps {
   onHandleActiveBurger: () => void;
 }
 
-export const BurgerMenu: FC<IBurgerMenuProps> = ({ onHandleActiveBurger }) => {
+export const BurgerMenu: FC<IBurgerMenuProps> = () => {
   return (
     <BurgerMenuContainer>
-      <ButtonBurgerClose onClick={onHandleActiveBurger}>
+      <ButtonBurgerClose>
         <svg width={32} height={32}>
           <use href={`${sprite}#modal-close-icon`} />
         </svg>

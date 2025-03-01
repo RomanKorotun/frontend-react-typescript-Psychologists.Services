@@ -1,25 +1,36 @@
 import styled from "styled-components";
 
-export const UserMenuCard = styled.div`
-  position: relative;
-  display: flex;
-  gap: 18px;
-`;
-
 export const User = styled.div`
   display: flex;
   align-items: center;
   gap: 14px;
 `;
 
-export const Avatar = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  &:hover,
-  &:focus {
-    cursor: pointer;
+export const Name = styled.p`
+  @media screen and (max-width: 769px) {
+    font-size: 14px;
   }
+`;
+
+export const AvatarWrapper = styled.div`
+  position: relative;
+`;
+
+export const Avatar = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+`;
+
+export const MenuCard = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+export const MenuTitle = styled.span`
+  font-size: 12px;
 `;
 
 export const Button = styled.button`
